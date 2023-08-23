@@ -17,3 +17,17 @@
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+
+import functions = require("firebase-functions");
+
+import admin = require("firebase-admin");
+admin.initializeApp();
+
+const db = admin.firestore();
+
+exports.newUser = functions.auth.user().onCreate((user) => {
+  return db
+    .collection("user")
+    .doc(user.uid)
+    .create(JSON.parse(JSON.stringify(user)));
+});
