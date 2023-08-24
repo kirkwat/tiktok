@@ -2,9 +2,9 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import styles from "./styles";
-import { useDispatch, useSelector } from "react-redux";
-import { login, register } from "../../../store/slices/authSlice";
-import { AppDispatch, RootState } from "../../../store/store";
+import { useDispatch } from "react-redux";
+import { login, register } from "../../../redux/slices/authSlice";
+import { AppDispatch } from "../../../redux/store";
 
 export interface AuthDetailsProps {
   authPage: 0 | 1;
@@ -30,7 +30,6 @@ export default function AuthDetails({
   const [password, setPassword] = useState("");
 
   const dispatch: AppDispatch = useDispatch();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const handleLogin = () => {
     dispatch(login({ email, password }))
