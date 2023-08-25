@@ -12,7 +12,7 @@ import SavePostScreen from "../../screens/savePost";
 export type RootStackParamList = {
   home: undefined;
   auth: undefined;
-  savePost: { source: string }; // <-- Here are your route params
+  savePost: { source: string; sourceThumb: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

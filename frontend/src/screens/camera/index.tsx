@@ -11,6 +11,7 @@ import {
 } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
+import * as VideoThumbnails from "expo-video-thumbnails";
 import { useIsFocused } from "@react-navigation/core";
 import { Feather } from "@expo/vector-icons";
 
@@ -74,7 +75,10 @@ export default function CameraScreen() {
         if (videoRecordPromise) {
           const data = await videoRecordPromise;
           const source = data.uri;
-          navigation.navigate("savePost", { source });
+          let sourceThumb = await generateThumbnail(source);
+          if (sourceThumb) {
+            navigation.navigate("savePost", { source, sourceThumb });
+          }
         }
       } catch (error) {
         console.warn(error);
@@ -89,14 +93,31 @@ export default function CameraScreen() {
   };
 
   const pickFromGallery = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Videos,
       allowsEditing: true,
       aspect: [16, 9],
       quality: 1,
     });
     if (!result.canceled) {
-      navigation.navigate("savePost", { source: result.assets[0].uri });
+      const sourceThumb = await generateThumbnail(result.assets[0].uri);
+      if (sourceThumb) {
+        navigation.navigate("savePost", {
+          source: result.assets[0].uri,
+          sourceThumb,
+        });
+      }
+    }
+  };
+
+  const generateThumbnail = async (source: string) => {
+    try {
+      const { uri } = await VideoThumbnails.getThumbnailAsync(source, {
+        time: 5000,
+      });
+      return uri;
+    } catch (e) {
+      console.warn(e);
     }
   };
 

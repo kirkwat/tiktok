@@ -16,17 +16,35 @@ const initialState: PostState = {
 
 export const createPost = createAsyncThunk(
   "post/create",
-  async ({ description, video }: { description: string; video: string }) => {
+  async (
+    {
+      description,
+      video,
+      thumbnail,
+    }: {
+      description: string;
+      video: string;
+      thumbnail: string;
+    },
+    { rejectWithValue }
+  ) => {
     if (FIREBASE_AUTH.currentUser) {
       try {
-        const downloadUrl = await saveMediaToStorage(
-          video,
-          `post/${FIREBASE_AUTH.currentUser.uid}/${uuid()}`
-        );
+        const storagePostId = uuid();
+        const [videoDownloadUrl, thumbnailDownloadUrl] = await Promise.all([
+          saveMediaToStorage(
+            video,
+            `post/${FIREBASE_AUTH.currentUser.uid}/${storagePostId}/video`
+          ),
+          saveMediaToStorage(
+            thumbnail,
+            `post/${FIREBASE_AUTH.currentUser.uid}/${storagePostId}/thumbnail`
+          ),
+        ]);
 
         await addDoc(collection(FIREBASE_DB, "post"), {
           creator: FIREBASE_AUTH.currentUser.uid,
-          downloadUrl,
+          media: [videoDownloadUrl, thumbnailDownloadUrl],
           description,
           likesCount: 0,
           commentsCount: 0,
@@ -34,10 +52,10 @@ export const createPost = createAsyncThunk(
         });
       } catch (error) {
         console.error("Error creating post: ", error);
-        throw error; // This will be caught by the rejected case in the slice
+        return rejectWithValue(error);
       }
     } else {
-      throw new Error("User is not authenticated"); // This will be caught by the rejected case in the slice
+      return rejectWithValue(new Error("User not authenticated"));
     }
   }
 );
