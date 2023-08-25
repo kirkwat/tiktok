@@ -7,6 +7,10 @@ export const store = configureStore({
     auth: authSlice,
     post: postSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type AppDispatch = typeof store.dispatch;

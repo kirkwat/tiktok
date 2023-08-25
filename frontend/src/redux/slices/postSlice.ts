@@ -1,17 +1,28 @@
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebaseConfig";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  serverTimestamp,
+  where,
+} from "firebase/firestore";
 import { saveMediaToStorage } from "./utils";
 import uuid from "uuid-random";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Post } from "../../../types";
 
 interface PostState {
   loading: boolean;
   error: string | null;
+  currentUserPosts: Post[] | null;
 }
 
 const initialState: PostState = {
   loading: false,
   error: null,
+  currentUserPosts: null,
 };
 
 export const createPost = createAsyncThunk(
@@ -60,6 +71,36 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const getPostsByUser = createAsyncThunk(
+  "post/getPostsByUser",
+  async (uid: string, { dispatch, rejectWithValue }) => {
+    try {
+      // Create a query against the collection.
+      const q = query(
+        collection(FIREBASE_DB, "post"),
+        where("creator", "==", uid),
+        orderBy("creation", "desc")
+      );
+
+      const querySnapshot = await getDocs(q);
+
+      // Map over the snapshot to get the array of posts
+      const posts = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        const id = doc.id;
+        return { id, ...data };
+      });
+      // Dispatch action to update the state. Replace `CURRENT_USER_POSTS_UPDATE` with the actual action creator
+      dispatch({ type: "CURRENT_USER_POSTS_UPDATE", payload: posts });
+
+      return posts; // Return posts as fulfilled payload
+    } catch (error) {
+      console.error("Failed to get posts: ", error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState,
@@ -77,6 +118,21 @@ const postSlice = createSlice({
         state.error = null;
       })
       .addCase(createPost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || null;
+      })
+      .addCase(getPostsByUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        getPostsByUser.fulfilled,
+        (state, action: PayloadAction<any[]>) => {
+          state.loading = false;
+          state.currentUserPosts = action.payload;
+        }
+      )
+      .addCase(getPostsByUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || null;
       });

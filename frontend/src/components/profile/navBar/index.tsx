@@ -9,14 +9,16 @@ export default function ProfileNavBar({
   user: RootState["auth"]["currentUser"];
 }) {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity>
-        <Feather name="search" size={20} />
-      </TouchableOpacity>
-      <Text style={styles.text}>{user.displayName}</Text>
-      <TouchableOpacity>
-        <Feather name="menu" size={24} />
-      </TouchableOpacity>
-    </View>
+    user && (
+      <View style={styles.container}>
+        <TouchableOpacity>
+          <Feather name="search" size={20} />
+        </TouchableOpacity>
+        <Text style={styles.text}>{user.displayName}</Text>
+        <TouchableOpacity>
+          <Feather name="menu" size={24} />
+        </TouchableOpacity>
+      </View>
+    )
   );
 }

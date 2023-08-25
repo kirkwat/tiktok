@@ -1,9 +1,14 @@
 import { View, Image } from "react-native";
 import styles from "./styles";
-export default function ProfilePostListItem({ item }) {
+import { RootState } from "../../../../redux/store";
+import { Post } from "../../../../../types";
+
+export default function ProfilePostListItem({ item }: { item: Post | null }) {
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: item.media[1] }} />
-    </View>
+    item && (
+      <View style={styles.container}>
+        <Image style={styles.image} source={{ uri: item.media[1] }} />
+      </View>
+    )
   );
 }

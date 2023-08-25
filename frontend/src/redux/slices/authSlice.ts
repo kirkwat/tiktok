@@ -5,6 +5,7 @@ import {
 } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebaseConfig";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
+import { getPostsByUser } from "./postSlice";
 
 export const userAuthStateListener = createAsyncThunk(
   "auth/userAuthStateListener",
@@ -12,6 +13,7 @@ export const userAuthStateListener = createAsyncThunk(
     FIREBASE_AUTH.onAuthStateChanged((user) => {
       if (user) {
         dispatch(getCurrentUserData());
+        dispatch(getPostsByUser(user.uid));
       } else {
         dispatch(setUserState({ currentUser: null, loaded: true }));
       }
@@ -61,12 +63,24 @@ export const register = createAsyncThunk(
   }
 );
 
+interface User {
+  email: string;
+  displayName: string;
+}
+
+interface AuthState {
+  currentUser: User | null;
+  loaded: boolean;
+}
+
+const initialState: AuthState = {
+  currentUser: null,
+  loaded: false,
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    currentUser: null,
-    loaded: false,
-  },
+  initialState,
   reducers: {
     setUserState: (state, action) => {
       state.currentUser = action.payload.currentUser;
