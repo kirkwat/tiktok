@@ -7,3 +7,9 @@ export interface Post {
   commentsCount: number;
   creation: any;
 }
+
+export interface User {
+  email: string;
+  displayName: string;
+  photoURL: string;
+}

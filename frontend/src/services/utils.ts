@@ -1,5 +1,5 @@
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { FIREBASE_STORAGE } from "../../../firebaseConfig";
+import { FIREBASE_STORAGE } from "../../firebaseConfig";
 
 export const saveMediaToStorage = async (media: string, path: string) => {
   const fileRef = ref(FIREBASE_STORAGE, path);

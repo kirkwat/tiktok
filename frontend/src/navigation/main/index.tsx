@@ -8,11 +8,15 @@ import { AppDispatch, RootState } from "../../redux/store";
 import HomeScreen from "../home";
 import { View } from "react-native";
 import SavePostScreen from "../../screens/savePost";
+import EditProfileScreen from "../../screens/profile/edit";
+import EditProfileFieldScreen from "../../screens/profile/edit/field";
 
 export type RootStackParamList = {
   home: undefined;
   auth: undefined;
   savePost: { source: string; sourceThumb: string };
+  editProfile: undefined;
+  editProfileField: { title: string; field: string; value: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -49,6 +53,16 @@ export default function Route() {
             <Stack.Screen
               name="savePost"
               component={SavePostScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="editProfile"
+              component={EditProfileScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="editProfileField"
+              component={EditProfileFieldScreen}
               options={{ headerShown: false }}
             />
           </>

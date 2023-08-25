@@ -8,7 +8,7 @@ import {
   serverTimestamp,
   where,
 } from "firebase/firestore";
-import { saveMediaToStorage } from "./utils";
+import { saveMediaToStorage } from "../../services/utils";
 import uuid from "uuid-random";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Post } from "../../../types";

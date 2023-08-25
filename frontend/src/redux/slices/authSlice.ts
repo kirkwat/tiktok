@@ -6,6 +6,7 @@ import {
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebaseConfig";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import { getPostsByUser } from "./postSlice";
+import { User } from "../../../types";
 
 export const userAuthStateListener = createAsyncThunk(
   "auth/userAuthStateListener",
@@ -62,11 +63,6 @@ export const register = createAsyncThunk(
     await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
   }
 );
-
-interface User {
-  email: string;
-  displayName: string;
-}
 
 interface AuthState {
   currentUser: User | null;
