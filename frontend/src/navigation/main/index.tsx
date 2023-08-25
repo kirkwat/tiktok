@@ -7,8 +7,15 @@ import AuthScreen from "../../screens/auth";
 import { AppDispatch, RootState } from "../../redux/store";
 import HomeScreen from "../home";
 import { View } from "react-native";
+import SavePostScreen from "../../screens/savePost";
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  home: undefined;
+  auth: undefined;
+  savePost: { source: string }; // <-- Here are your route params
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function Route() {
   const currentUserObj = useSelector((state: RootState) => state.auth);
@@ -18,7 +25,6 @@ export default function Route() {
   useEffect(() => {
     dispatch(userAuthStateListener());
   }, [dispatch]);
-  console.log(currentUserObj);
 
   if (!currentUserObj.loaded) {
     return <View></View>;
@@ -34,11 +40,18 @@ export default function Route() {
             options={{ headerShown: false }}
           />
         ) : (
-          <Stack.Screen
-            name="home"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen
+              name="home"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="savePost"
+              component={SavePostScreen}
+              options={{ headerShown: false }}
+            />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

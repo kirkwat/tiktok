@@ -1,3 +1,5 @@
+//! THIS NEEDS TO BE TESTED
+
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import {
@@ -13,6 +15,9 @@ import { useIsFocused } from "@react-navigation/core";
 import { Feather } from "@expo/vector-icons";
 
 import styles from "./styles";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../navigation/main";
 
 /**
  * Function that renders a component responsible showing
@@ -34,6 +39,8 @@ export default function CameraScreen() {
   const [isCameraReady, setIsCameraReady] = useState(false);
   const isFocused = useIsFocused();
 
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   useEffect(() => {
     (async () => {
       const cameraStatus = await requestCameraPermissionsAsync();
@@ -67,7 +74,7 @@ export default function CameraScreen() {
         if (videoRecordPromise) {
           const data = await videoRecordPromise;
           const source = data.uri;
-          //TODO: pass video uri into save component
+          navigation.navigate("savePost", { source });
         }
       } catch (error) {
         console.warn(error);
@@ -89,7 +96,7 @@ export default function CameraScreen() {
       quality: 1,
     });
     if (!result.canceled) {
-      //TODO: pass video uri into save component
+      navigation.navigate("savePost", { source: result.assets[0].uri });
     }
   };
 
