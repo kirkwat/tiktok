@@ -1,7 +1,16 @@
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { updateProfile } from "firebase/auth";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  updateDoc,
+  query,
+  collection,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { saveMediaToStorage } from "./utils";
+import { SearchUser } from "../../types";
 
 export const saveUserProfileImage = (image: string) =>
   new Promise<void>(async (resolve, reject) => {
@@ -49,3 +58,32 @@ export const saveUserField = (field: string, value: string) =>
       reject(error);
     }
   });
+
+export const queryUsersByEmail = (email: string): Promise<SearchUser[]> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (email === "") {
+        resolve([]);
+        return;
+      }
+
+      const q = query(
+        collection(FIREBASE_DB, "user"),
+        where("email", ">=", email),
+        where("email", "<=", email + "\uf8ff")
+      );
+
+      const querySnapshot = await getDocs(q);
+      const users = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        const id = doc.id;
+        return { id, ...data } as SearchUser;
+      });
+
+      resolve(users);
+    } catch (error) {
+      console.error("Failed to query users: ", error);
+      reject(error);
+    }
+  });
+};

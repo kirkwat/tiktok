@@ -12,4 +12,9 @@ export interface User {
   email: string;
   displayName: string;
   photoURL: string;
+  id?: string;
+}
+
+export interface SearchUser extends User {
+  id: string;
 }

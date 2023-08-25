@@ -3,6 +3,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { Feather } from "@expo/vector-icons";
 import CameraScreen from "../../screens/camera";
 import ProfileScreen from "../../screens/profile";
+import SearchScreen from "../../screens/search";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -27,7 +28,7 @@ export default function HomeScreen() {
       />
       <Tab.Screen
         name="Discover"
-        component={EmptyScreen}
+        component={SearchScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Feather name="search" size={24} color={color} />
