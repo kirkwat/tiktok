@@ -10,7 +10,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { saveMediaToStorage } from "./utils";
-import { SearchUser } from "../../types";
+import { User } from "../../types";
 
 export const saveUserProfileImage = (image: string) =>
   new Promise<void>(async (resolve, reject) => {
@@ -59,7 +59,7 @@ export const saveUserField = (field: string, value: string) =>
     }
   });
 
-export const queryUsersByEmail = (email: string): Promise<SearchUser[]> => {
+export const queryUsersByEmail = (email: string): Promise<User[]> => {
   return new Promise(async (resolve, reject) => {
     try {
       if (email === "") {
@@ -77,7 +77,7 @@ export const queryUsersByEmail = (email: string): Promise<SearchUser[]> => {
       const users = querySnapshot.docs.map((doc) => {
         const data = doc.data();
         const id = doc.id;
-        return { id, ...data } as SearchUser;
+        return { id, ...data } as User;
       });
 
       resolve(users);

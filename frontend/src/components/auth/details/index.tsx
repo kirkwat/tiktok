@@ -34,7 +34,7 @@ export default function AuthDetails({
   const handleLogin = () => {
     dispatch(login({ email, password }))
       .unwrap()
-      .then(() => console.log("login successful"))
+      .then(() => {})
       .catch(() => console.log("login unsuccessful"));
   };
 

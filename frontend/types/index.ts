@@ -5,16 +5,12 @@ export interface Post {
   description: string;
   likesCount: number;
   commentsCount: number;
-  creation: any;
+  creation: string;
 }
 
 export interface User {
+  id: string;
   email: string;
   displayName: string;
   photoURL: string;
-  id?: string;
-}
-
-export interface SearchUser extends User {
-  id: string;
 }
