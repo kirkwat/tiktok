@@ -8,6 +8,7 @@ import {
   collection,
   where,
   getDocs,
+  getDoc,
 } from "firebase/firestore";
 import { saveMediaToStorage } from "./utils";
 import { User } from "../../types";
@@ -86,4 +87,23 @@ export const queryUsersByEmail = (email: string): Promise<User[]> => {
       reject(error);
     }
   });
+};
+
+/**
+ * fetches the doc corresponding to the id of a user.
+ *
+ * @param {String} id of the user we want to fetch
+ * @returns {Promise<User>} user object if successful.
+ */
+export const getUserById = async (id: string): Promise<User | null> => {
+  try {
+    const docSnapshot = await getDoc(doc(FIREBASE_DB, "user", id));
+    if (docSnapshot.exists()) {
+      return docSnapshot.data() as User;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    throw new Error(String(error));
+  }
 };

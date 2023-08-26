@@ -2,6 +2,8 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { ResizeMode, Video } from "expo-av";
 import styles from "./styles";
 import { Post } from "../../../../types";
+import { useUser } from "../../../hooks/useUser";
+import PostSingleOverlay from "./overlay";
 
 export interface PostSingleHandles {
   play: () => Promise<void>;
@@ -19,6 +21,8 @@ export interface PostSingleHandles {
 export const PostSingle = forwardRef<PostSingleHandles, { item: Post }>(
   ({ item }, parentRef) => {
     const ref = useRef<Video>(null);
+    const user = useUser(item.creator).data;
+
     useImperativeHandle(parentRef, () => ({
       play,
       stop,
@@ -98,19 +102,22 @@ export const PostSingle = forwardRef<PostSingleHandles, { item: Post }>(
     };
 
     return (
-      <Video
-        ref={ref}
-        style={styles.container}
-        resizeMode={ResizeMode.COVER}
-        shouldPlay={false}
-        isLooping
-        usePoster
-        posterSource={{ uri: item.media[1] }}
-        posterStyle={{ resizeMode: "cover", height: "100%" }}
-        source={{
-          uri: item.media[0],
-        }}
-      />
+      <>
+        {user && <PostSingleOverlay user={user} post={item} />}
+        <Video
+          ref={ref}
+          style={styles.container}
+          resizeMode={ResizeMode.COVER}
+          shouldPlay={false}
+          isLooping
+          usePoster
+          posterSource={{ uri: item.media[1] }}
+          posterStyle={{ resizeMode: "cover", height: "100%" }}
+          source={{
+            uri: item.media[0],
+          }}
+        />
+      </>
     );
   }
 );
