@@ -9,8 +9,12 @@ export interface Post {
 }
 
 export interface User {
-  id: string;
+  uid: string;
   email: string;
   displayName: string;
   photoURL: string;
+}
+
+export interface SearchUser extends User {
+  id: string;
 }

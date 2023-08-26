@@ -4,11 +4,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SearchUserItem from "../../components/search/userItem";
 import { queryUsersByEmail } from "../../services/user";
 import styles from "./styles";
-import { User } from "../../../types";
+import { SearchUser } from "../../../types";
 
 export default function SearchScreen() {
   const [textInput, setTextInput] = useState("");
-  const [searchUsers, setSearchUsers] = useState<User[]>([]);
+  const [searchUsers, setSearchUsers] = useState<SearchUser[]>([]);
 
   useEffect(() => {
     queryUsersByEmail(textInput).then((users) => setSearchUsers(users));
