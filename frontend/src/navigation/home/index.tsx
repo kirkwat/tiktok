@@ -4,9 +4,18 @@ import { Feather } from "@expo/vector-icons";
 import CameraScreen from "../../screens/camera";
 import ProfileScreen from "../../screens/profile";
 import SearchScreen from "../../screens/search";
-import FeedScreen from "../../screens/feed";
+import FeedNavigation from "../feed";
+import { FIREBASE_AUTH } from "../../../firebaseConfig";
 
-const Tab = createMaterialBottomTabNavigator();
+export type HomeStackParamList = {
+  feed: undefined;
+  Discover: undefined;
+  Add: undefined;
+  Inbox: undefined;
+  Me: { initialUserId: string };
+};
+
+const Tab = createMaterialBottomTabNavigator<HomeStackParamList>();
 
 const EmptyScreen = () => {
   return <View></View>;
@@ -20,7 +29,7 @@ export default function HomeScreen() {
     >
       <Tab.Screen
         name="feed"
-        component={FeedScreen}
+        component={FeedNavigation}
         options={{
           tabBarIcon: ({ color }) => (
             <Feather name="home" size={24} color={color} />
@@ -62,6 +71,7 @@ export default function HomeScreen() {
             <Feather name="user" size={24} color={color} />
           ),
         }}
+        initialParams={{ initialUserId: FIREBASE_AUTH.currentUser?.uid }}
       />
     </Tab.Navigator>
   );

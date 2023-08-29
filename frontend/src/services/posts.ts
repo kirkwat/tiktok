@@ -10,8 +10,9 @@ import {
   serverTimestamp,
   orderBy,
   onSnapshot,
+  where,
 } from "firebase/firestore";
-import { FIREBASE_DB } from "../../firebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { Post, Comment } from "../../types";
 import { Dispatch, SetStateAction } from "react";
 
@@ -128,4 +129,34 @@ export const clearCommentListener = () => {
     commentListenerInstance();
     commentListenerInstance = null;
   }
+};
+
+export const getPostsByUserId = (
+  uid = FIREBASE_AUTH.currentUser?.uid
+): Promise<Post[]> => {
+  console.log("UID:", uid)
+
+  return new Promise((resolve, reject) => {
+    if (!uid) {
+      reject(new Error("User ID is not set"));
+      return;
+    }
+
+    const q = query(
+      collection(FIREBASE_DB, "post"),
+      where("creator", "==", uid),
+      orderBy("creation", "desc")
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      let posts = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        const id = doc.id;
+        return { id, ...data } as Post;
+      });
+      resolve(posts);
+    });
+
+    return () => unsubscribe();
+  });
 };

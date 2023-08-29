@@ -1,9 +1,22 @@
 import { FlatList, View, Dimensions, ViewToken } from "react-native";
 import styles from "./styles";
 import PostSingle, { PostSingleHandles } from "../../components/general/post";
-import { useEffect, useRef, useState } from "react";
-import { getFeed } from "../../services/posts";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { getFeed, getPostsByUserId } from "../../services/posts";
 import { Post } from "../../../types";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../navigation/main";
+import { HomeStackParamList } from "../../navigation/home";
+import { FeedStackParamList } from "../../navigation/feed";
+
+type FeedScreenRouteProp =
+  | RouteProp<RootStackParamList, "userPosts">
+  | RouteProp<HomeStackParamList, "feed">
+  | RouteProp<FeedStackParamList, "feedList">;
+
+interface PostViewToken extends ViewToken {
+  item: Post;
+}
 
 /**
  * Component that renders a list of posts meant to be
@@ -12,12 +25,23 @@ import { Post } from "../../../types";
  * On start make fetch for posts then use a flatList
  * to display/control the posts.
  */
-export default function FeedScreen() {
+export default function FeedScreen({ route }: { route: FeedScreenRouteProp }) {
+  const { setCurrentUserProfileItemInView, creator, profile } =
+    route.params as {
+      setCurrentUserProfileItemInView: Dispatch<SetStateAction<string | null>>;
+      creator: string;
+      profile: boolean;
+    };
+
   const [posts, setPosts] = useState<Post[]>([]);
   const mediaRefs = useRef<Record<string, PostSingleHandles | null>>({});
 
   useEffect(() => {
-    getFeed().then((posts) => setPosts(posts));
+    if (profile && creator) {
+      getPostsByUserId(creator).then((posts) => setPosts(posts));
+    } else {
+      getFeed().then((posts) => setPosts(posts));
+    }
   }, []);
 
   /**
@@ -26,12 +50,15 @@ export default function FeedScreen() {
    * the post that is viewable and stop all the others
    */
   const onViewableItemsChanged = useRef(
-    ({ changed }: { changed: ViewToken[] }) => {
+    ({ changed }: { changed: PostViewToken[] }) => {
       changed.forEach((element) => {
         const cell = mediaRefs.current[element.key];
 
         if (cell) {
           if (element.isViewable) {
+            if (!profile && setCurrentUserProfileItemInView) {
+              setCurrentUserProfileItemInView(element.item.creator);
+            }
             cell.play();
           } else {
             cell.stop();
@@ -51,11 +78,10 @@ export default function FeedScreen() {
   const renderItem = ({ item, index }: { item: Post; index: number }) => {
     return (
       <View
-        //! DON'T HARDCODE THE HEIGHT DIFFERENCE
-        style={[
-          { flex: 1, height: Dimensions.get("window").height - 80 },
-          index % 2 ? { backgroundColor: "blue" } : { backgroundColor: "pink" },
-        ]}
+        style={{
+          height: Dimensions.get("window").height - 80,
+          backgroundColor: "black",
+        }}
       >
         <PostSingle
           item={item}
@@ -74,7 +100,7 @@ export default function FeedScreen() {
         maxToRenderPerBatch={2}
         removeClippedSubviews
         viewabilityConfig={{
-          itemVisiblePercentThreshold: 100,
+          itemVisiblePercentThreshold: 0,
         }}
         renderItem={renderItem}
         pagingEnabled

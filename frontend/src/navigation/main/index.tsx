@@ -11,10 +11,14 @@ import SavePostScreen from "../../screens/savePost";
 import EditProfileScreen from "../../screens/profile/edit";
 import EditProfileFieldScreen from "../../screens/profile/edit/field";
 import Modal from "../../components/modal";
+import FeedScreen from "../../screens/feed";
+import ProfileScreen from "../../screens/profile";
 
 export type RootStackParamList = {
   home: undefined;
   auth: undefined;
+  userPosts: { creator: string; profile: boolean };
+  profileOther: { initialUserId: string };
   savePost: { source: string; sourceThumb: string };
   editProfile: undefined;
   editProfileField: { title: string; field: string; value: string };
@@ -54,6 +58,16 @@ export default function Route() {
             <Stack.Screen
               name="savePost"
               component={SavePostScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="userPosts"
+              component={FeedScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="profileOther"
+              component={ProfileScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen

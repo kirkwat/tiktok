@@ -23,7 +23,7 @@ export default function SearchScreen() {
       />
       <FlatList
         data={searchUsers}
-        renderItem={SearchUserItem}
+        renderItem={({ item }) => <SearchUserItem item={item} />}
         keyExtractor={(item) => item.id}
       />
     </SafeAreaView>

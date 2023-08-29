@@ -28,7 +28,7 @@ export const newUser = functions.auth.user().onCreate((user) => {
   return db
     .collection("user")
     .doc(user.uid)
-    .set({ ...user }); // Using the spread operator to copy all fields
+    .create(JSON.parse(JSON.stringify(user)));
 });
 
 export const likeCreate = functions.firestore
