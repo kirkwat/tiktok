@@ -9,6 +9,8 @@ import {
   where,
   getDocs,
   getDoc,
+  deleteDoc,
+  setDoc,
 } from "firebase/firestore";
 import { saveMediaToStorage } from "./utils";
 import { SearchUser, User } from "../../types";
@@ -105,5 +107,76 @@ export const getUserById = async (id: string): Promise<User | null> => {
     }
   } catch (error) {
     throw new Error(String(error));
+  }
+};
+
+/**
+ * Checks if a user is following another by seeing if a follow doc exists.
+ *
+ * @param {String} userId of the user we want to see if it's following another
+ * @param {String} otherUserId the id of the user that we want to check if it's being followed by another.
+ * @returns {Boolean} if true means the user is indeed following the other User
+ */
+export const getIsFollowing = async (userId: string, otherUserId: string) => {
+  const userDocRef = doc(FIREBASE_DB, "user", userId, "following", otherUserId);
+
+  try {
+    const docSnap = await getDoc(userDocRef);
+
+    if (docSnap.exists()) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Error checking following status: ", error);
+    return false;
+  }
+};
+
+/**
+ * Changes the follow state of two users depending on the current
+ * follow state.
+ *
+ * @param {Object} props object containing the relevant info
+ * @param {Boolean} isFollowing current follow state
+ * @param {String} otherUserId the id of the user that we want to check if it's being followed by another.
+ * @returns
+ */
+export const changeFollowState = async ({
+  otherUserId,
+  isFollowing,
+}: {
+  otherUserId: string;
+  isFollowing: boolean;
+}) => {
+  const currentUserUid = FIREBASE_AUTH.currentUser
+    ? FIREBASE_AUTH.currentUser.uid
+    : null;
+
+  if (!currentUserUid) {
+    console.error("No current user");
+    return false;
+  }
+
+  const followingDocRef = doc(
+    FIREBASE_DB,
+    "user",
+    currentUserUid,
+    "following",
+    otherUserId
+  );
+
+  try {
+    if (isFollowing) {
+      await deleteDoc(followingDocRef);
+      return true;
+    } else {
+      await setDoc(followingDocRef, {});
+      return true;
+    }
+  } catch (error) {
+    console.error("Error changing follow state: ", error);
+    return false;
   }
 };

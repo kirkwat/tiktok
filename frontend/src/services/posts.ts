@@ -134,7 +134,6 @@ export const clearCommentListener = () => {
 export const getPostsByUserId = (
   uid = FIREBASE_AUTH.currentUser?.uid
 ): Promise<Post[]> => {
-  console.log("UID:", uid)
 
   return new Promise((resolve, reject) => {
     if (!uid) {

@@ -9,7 +9,7 @@ export type FeedStackParamList = {
     creator: string;
     profile: boolean;
   };
-  feedProfile: { initialUserId: string | null };
+  feedProfile: { initialUserId: string };
 };
 
 const { Screen, Navigator } =
@@ -36,7 +36,7 @@ const FeedNavigation = () => {
         <Screen
           name="feedProfile"
           component={ProfileScreen}
-          initialParams={{ initialUserId: null }}
+          initialParams={{ initialUserId: "" }}
         />
       </Navigator>
     </CurrentUserProfileItemInViewContext.Provider>

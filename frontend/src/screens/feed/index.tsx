@@ -8,6 +8,7 @@ import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigation/main";
 import { HomeStackParamList } from "../../navigation/home";
 import { FeedStackParamList } from "../../navigation/feed";
+import useMaterialNavBarHeight from "../../hooks/useMaterialNavBarHeight";
 
 type FeedScreenRouteProp =
   | RouteProp<RootStackParamList, "userPosts">
@@ -68,6 +69,8 @@ export default function FeedScreen({ route }: { route: FeedScreenRouteProp }) {
     }
   );
 
+  const feedItemHeight =
+    Dimensions.get("window").height - useMaterialNavBarHeight(profile);
   /**
    * renders the item shown in the FlatList
    *
@@ -79,7 +82,7 @@ export default function FeedScreen({ route }: { route: FeedScreenRouteProp }) {
     return (
       <View
         style={{
-          height: Dimensions.get("window").height - 80,
+          height: feedItemHeight,
           backgroundColor: "black",
         }}
       >

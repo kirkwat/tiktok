@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { USER_KEY } from "./queryKeys";
+import { keys } from "./queryKeys";
 import { getUserById } from "../services/user";
 
 /**
@@ -12,5 +12,14 @@ import { getUserById } from "../services/user";
  * @returns
  */
 export const useUser = (userId: string, options = {}) => {
-  return useQuery([USER_KEY, userId], () => getUserById(userId), options);
+  return useQuery(
+    keys.user(userId),
+    () => {
+      if (userId === "") {
+        return null;
+      }
+      return getUserById(userId);
+    },
+    options
+  );
 };
