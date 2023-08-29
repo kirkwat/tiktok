@@ -18,50 +18,45 @@
 //   response.send("Hello from Firebase!");
 // });
 
-import functions = require("firebase-functions");
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
-import admin = require("firebase-admin");
 admin.initializeApp();
-
 const db = admin.firestore();
 
-exports.newUser = functions.auth.user().onCreate((user) => {
+export const newUser = functions.auth.user().onCreate((user) => {
   return db
     .collection("user")
     .doc(user.uid)
-    .create(JSON.parse(JSON.stringify(user)));
+    .set({ ...user }); // Using the spread operator to copy all fields
 });
 
-exports.likeCreate = functions.firestore
+export const likeCreate = functions.firestore
   .document("post/{id}/{type}/{uid}")
   .onCreate((_, context) => {
     let updateObj = {};
-    if (context.params.type == "comments") {
-      updateObj = {
-        commentsCount: admin.firestore.FieldValue.increment(1),
-      };
+    const { type, id } = context.params;
+
+    if (type === "comments") {
+      updateObj = { commentsCount: admin.firestore.FieldValue.increment(1) };
     }
-    if (context.params.type == "likes") {
-      updateObj = {
-        likesCount: admin.firestore.FieldValue.increment(1),
-      };
+    if (type === "likes") {
+      updateObj = { likesCount: admin.firestore.FieldValue.increment(1) };
     }
-    return db.collection("post").doc(context.params.id).update(updateObj);
+    return db.collection("post").doc(id).update(updateObj);
   });
 
-exports.likeDelete = functions.firestore
+export const likeDelete = functions.firestore
   .document("post/{id}/{type}/{uid}")
   .onDelete((_, context) => {
     let updateObj = {};
-    if (context.params.type == "comments") {
-      updateObj = {
-        commentsCount: admin.firestore.FieldValue.increment(-1),
-      };
+    const { type, id } = context.params;
+
+    if (type === "comments") {
+      updateObj = { commentsCount: admin.firestore.FieldValue.increment(-1) };
     }
-    if (context.params.type == "likes") {
-      updateObj = {
-        likesCount: admin.firestore.FieldValue.increment(-1),
-      };
+    if (type === "likes") {
+      updateObj = { likesCount: admin.firestore.FieldValue.increment(-1) };
     }
-    return db.collection("post").doc(context.params.id).update(updateObj);
+    return db.collection("post").doc(id).update(updateObj);
   });
