@@ -6,9 +6,16 @@ import {
   doc,
   deleteDoc,
   setDoc,
+  addDoc,
+  serverTimestamp,
+  orderBy,
+  onSnapshot,
 } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebaseConfig";
-import { Post } from "../../types";
+import { Post, Comment } from "../../types";
+import { Dispatch, SetStateAction } from "react";
+
+let commentListenerInstance: (() => void) | null = null;
 
 /**
  * Returns all the posts in the database.
@@ -73,5 +80,52 @@ export const updateLike = async (
     }
   } catch (error) {
     throw new Error("Could not update like");
+  }
+};
+
+export const addComment = async (
+  postId: string,
+  creator: string,
+  comment: string
+) => {
+  try {
+    await addDoc(collection(FIREBASE_DB, "post", postId, "comments"), {
+      creator,
+      comment,
+      creation: serverTimestamp(),
+    });
+  } catch (e) {
+    console.error("Error adding comment: ", e);
+  }
+};
+
+export const commentListener = (
+  postId: string,
+  setCommentList: Dispatch<SetStateAction<Comment[]>>
+) => {
+  const commentsQuery = query(
+    collection(FIREBASE_DB, "post", postId, "comments"),
+    orderBy("creation", "desc")
+  );
+
+  const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
+    if (snapshot.docChanges().length === 0) {
+      return;
+    }
+    const comments = snapshot.docs.map((docSnapshot) => {
+      const id = docSnapshot.id;
+      const data = docSnapshot.data();
+      return { id, ...data } as Comment;
+    });
+    setCommentList(comments);
+  });
+
+  return unsubscribe;
+};
+
+export const clearCommentListener = () => {
+  if (commentListenerInstance != null) {
+    commentListenerInstance();
+    commentListenerInstance = null;
   }
 };

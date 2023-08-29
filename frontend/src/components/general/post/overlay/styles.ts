@@ -28,13 +28,13 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 2,
     borderColor: "white",
+    marginBottom: 30,
   },
   leftContainer: {
     alignItems: "center",
   },
   actionButton: {
-    padding: 10,
-    marginTop: 16,
+    paddingBottom: 16,
   },
   actionButtonText: {
     color: "white",

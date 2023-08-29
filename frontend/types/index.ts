@@ -8,6 +8,12 @@ export interface Post {
   creation: string;
 }
 
+export interface Comment {
+  id: string;
+  creator: string;
+  comment: string;
+}
+
 export interface User {
   uid: string;
   email: string;

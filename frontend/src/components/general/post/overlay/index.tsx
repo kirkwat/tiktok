@@ -3,10 +3,11 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { Post, User } from "../../../../../types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { throttle } from "throttle-debounce";
 import { getLikeById, updateLike } from "../../../../services/posts";
-import { RootState } from "../../../../redux/store";
+import { AppDispatch, RootState } from "../../../../redux/store";
+import { openCommentModal } from "../../../../redux/slices/modalSlice";
 
 /**
  * Function that renders a component meant to be overlapped on
@@ -24,6 +25,7 @@ export default function PostSingleOverlay({
   post: Post;
 }) {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
+  const dispatch: AppDispatch = useDispatch();
 
   const [currentLikeState, setCurrentLikeState] = useState({
     state: false,
@@ -84,6 +86,21 @@ export default function PostSingleOverlay({
           <Text style={styles.actionButtonText}>
             {currentLikeState.counter}
           </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() =>
+            dispatch(
+              openCommentModal({
+                open: true,
+                data: post,
+                modalType: 0,
+              })
+            )
+          }
+        >
+          <Ionicons color="white" size={40} name={"chatbubble"} />
+          <Text style={styles.actionButtonText}>{post.commentsCount}</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -10,6 +10,7 @@ import { View } from "react-native";
 import SavePostScreen from "../../screens/savePost";
 import EditProfileScreen from "../../screens/profile/edit";
 import EditProfileFieldScreen from "../../screens/profile/edit/field";
+import Modal from "../../components/modal";
 
 export type RootStackParamList = {
   home: undefined;
@@ -68,6 +69,7 @@ export default function Route() {
           </>
         )}
       </Stack.Navigator>
+      <Modal />
     </NavigationContainer>
   );
 }
