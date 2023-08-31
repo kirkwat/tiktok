@@ -1,8 +1,9 @@
-import { Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import { Post } from "../../../../../types";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Image, TouchableOpacity } from "react-native";
+
+import styles from "./styles";
+import { Post } from "../../../../../types";
 import { RootStackParamList } from "../../../../navigation/main";
 
 export default function ProfilePostListItem({ item }: { item: Post | null }) {

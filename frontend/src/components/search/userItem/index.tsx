@@ -1,13 +1,15 @@
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { Text, TouchableOpacity, Image } from "react-native";
+
 import styles from "./styles";
 import { SearchUser } from "../../../../types";
-import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../navigation/main";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function SearchUserItem({ item }: { item: SearchUser }) {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <TouchableOpacity

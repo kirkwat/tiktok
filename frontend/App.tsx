@@ -1,8 +1,9 @@
-import { store } from "./src/redux/store";
-import { Provider } from "react-redux";
-import Route from "./src/navigation/main";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Provider } from "react-redux";
+
+import Route from "./src/navigation/main";
+import { store } from "./src/redux/store";
 
 const queryClient = new QueryClient({
   defaultOptions: {

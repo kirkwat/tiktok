@@ -1,9 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { ResizeMode, Video } from "expo-av";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+
+import PostSingleOverlay from "./overlay";
 import styles from "./styles";
 import { Post } from "../../../../types";
 import { useUser } from "../../../hooks/useUser";
-import PostSingleOverlay from "./overlay";
 
 export interface PostSingleHandles {
   play: () => Promise<void>;
@@ -119,7 +120,7 @@ export const PostSingle = forwardRef<PostSingleHandles, { item: Post }>(
         />
       </>
     );
-  }
+  },
 );
 
 export default PostSingle;

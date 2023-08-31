@@ -1,4 +1,3 @@
-import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { updateProfile } from "firebase/auth";
 import {
   getFirestore,
@@ -12,7 +11,9 @@ import {
   deleteDoc,
   setDoc,
 } from "firebase/firestore";
+
 import { saveMediaToStorage } from "./utils";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { SearchUser, User } from "../../types";
 
 export const saveUserProfileImage = (image: string) =>
@@ -21,7 +22,7 @@ export const saveUserProfileImage = (image: string) =>
       if (FIREBASE_AUTH.currentUser) {
         const downloadURL = await saveMediaToStorage(
           image,
-          `profileImage/${FIREBASE_AUTH.currentUser.uid}`
+          `profileImage/${FIREBASE_AUTH.currentUser.uid}`,
         );
 
         const db = getFirestore();
@@ -50,7 +51,7 @@ export const saveUserField = (field: string, value: string) =>
       if (FIREBASE_AUTH.currentUser) {
         const userDoc = doc(FIREBASE_DB, "user", FIREBASE_AUTH.currentUser.uid);
 
-        let obj: { [key: string]: string } = {};
+        const obj: { [key: string]: string } = {};
         obj[field] = value;
 
         await updateDoc(userDoc, obj);
@@ -73,7 +74,7 @@ export const queryUsersByEmail = (email: string): Promise<SearchUser[]> => {
       const q = query(
         collection(FIREBASE_DB, "user"),
         where("email", ">=", email),
-        where("email", "<=", email + "\uf8ff")
+        where("email", "<=", email + "\uf8ff"),
       );
 
       const querySnapshot = await getDocs(q);
@@ -164,7 +165,7 @@ export const changeFollowState = async ({
     "user",
     currentUserUid,
     "following",
-    otherUserId
+    otherUserId,
   );
 
   try {

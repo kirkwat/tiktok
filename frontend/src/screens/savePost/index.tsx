@@ -1,4 +1,10 @@
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
+import {
+  StackActions,
+  useNavigation,
+  RouteProp,
+} from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -8,14 +14,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import styles from "./styles";
-import { Feather } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { createPost } from "../../redux/slices/postSlice";
 
-import { RouteProp } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import styles from "./styles";
 import { RootStackParamList } from "../../navigation/main";
+import { createPost } from "../../redux/slices/postSlice";
 import { AppDispatch } from "../../redux/store";
 
 interface SavePostScreenProps {
@@ -36,7 +39,7 @@ export default function SavePostScreen({ route }: SavePostScreenProps) {
         description,
         video: route.params.source,
         thumbnail: route.params.sourceThumb,
-      })
+      }),
     )
       .then(() => navigation.dispatch(StackActions.popToTop()))
       .catch(() => setRequestRunning(false));

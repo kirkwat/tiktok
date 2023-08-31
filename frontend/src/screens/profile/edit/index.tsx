@@ -1,16 +1,17 @@
+import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import * as ImagePicker from "expo-image-picker";
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
+
 import styles from "./styles";
 import NavBarGeneral from "../../../components/general/navbar";
-import { Feather } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
-import { saveUserProfileImage } from "../../../services/user";
-import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-import { RootState } from "../../../redux/store";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../navigation/main";
+import { RootState } from "../../../redux/store";
+import { saveUserProfileImage } from "../../../services/user";
 
 export default function EditProfileScreen() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -18,7 +19,7 @@ export default function EditProfileScreen() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const chooseImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],

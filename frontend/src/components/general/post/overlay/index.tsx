@@ -1,16 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import styles from "./styles";
-import { Post, User } from "../../../../../types";
-import { useDispatch, useSelector } from "react-redux";
-import { throttle } from "throttle-debounce";
-import { getLikeById, updateLike } from "../../../../services/posts";
-import { AppDispatch, RootState } from "../../../../redux/store";
-import { openCommentModal } from "../../../../redux/slices/modalSlice";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useEffect, useMemo, useState } from "react";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { throttle } from "throttle-debounce";
+
+import styles from "./styles";
+import { Post, User } from "../../../../../types";
 import { RootStackParamList } from "../../../../navigation/main";
+import { openCommentModal } from "../../../../redux/slices/modalSlice";
+import { AppDispatch, RootState } from "../../../../redux/store";
+import { getLikeById, updateLike } from "../../../../services/posts";
 
 /**
  * Function that renders a component meant to be overlapped on
@@ -68,7 +69,7 @@ export default function PostSingleOverlay({
           updateLike(post.id, currentUser.uid, currentLikeStateInst.state);
         }
       }),
-    []
+    [],
   );
 
   return (
@@ -108,11 +109,11 @@ export default function PostSingleOverlay({
                 open: true,
                 data: post,
                 modalType: 0,
-              })
+              }),
             )
           }
         >
-          <Ionicons color="white" size={40} name={"chatbubble"} />
+          <Ionicons color="white" size={40} name="chatbubble" />
           <Text style={styles.actionButtonText}>{post.commentsCount}</Text>
         </TouchableOpacity>
       </View>

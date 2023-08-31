@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, createContext, useState } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
+
 import FeedScreen from "../../screens/feed";
 import ProfileScreen from "../../screens/profile";
 
@@ -16,7 +17,7 @@ const { Screen, Navigator } =
   createMaterialTopTabNavigator<FeedStackParamList>();
 
 export const CurrentUserProfileItemInViewContext = createContext<string | null>(
-  null
+  null,
 );
 
 const FeedNavigation = () => {

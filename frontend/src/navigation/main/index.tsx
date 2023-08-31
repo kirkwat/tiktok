@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { userAuthStateListener } from "../../redux/slices/authSlice"; // Make sure the path is correct
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AuthScreen from "../../screens/auth";
-import { AppDispatch, RootState } from "../../redux/store";
-import HomeScreen from "../home";
+import React, { useEffect } from "react";
 import { View } from "react-native";
-import SavePostScreen from "../../screens/savePost";
-import EditProfileScreen from "../../screens/profile/edit";
-import EditProfileFieldScreen from "../../screens/profile/edit/field";
+import { useDispatch, useSelector } from "react-redux";
+
 import Modal from "../../components/modal";
+import { userAuthStateListener } from "../../redux/slices/authSlice"; // Make sure the path is correct
+import { AppDispatch, RootState } from "../../redux/store";
+import AuthScreen from "../../screens/auth";
 import FeedScreen from "../../screens/feed";
 import ProfileScreen from "../../screens/profile";
+import EditProfileScreen from "../../screens/profile/edit";
+import EditProfileFieldScreen from "../../screens/profile/edit/field";
+import SavePostScreen from "../../screens/savePost";
+import HomeScreen from "../home";
 
 export type RootStackParamList = {
   home: undefined;
@@ -36,7 +37,7 @@ export default function Route() {
   }, [dispatch]);
 
   if (!currentUserObj.loaded) {
-    return <View></View>;
+    return <View />;
   }
 
   return (

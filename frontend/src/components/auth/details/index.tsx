@@ -1,8 +1,9 @@
+import { Feather } from "@expo/vector-icons";
 import { Dispatch, SetStateAction, useState } from "react";
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import styles from "./styles";
 import { useDispatch } from "react-redux";
+
+import styles from "./styles";
 import { login, register } from "../../../redux/slices/authSlice";
 import { AppDispatch } from "../../../redux/store";
 
@@ -64,10 +65,10 @@ export default function AuthDetails({
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => (authPage == 0 ? handleLogin() : handleRegister())}
+        onPress={() => (authPage === 0 ? handleLogin() : handleRegister())}
       >
         <Text style={styles.buttonText}>
-          {authPage == 0 ? "Sign In" : "Sign Up"}
+          {authPage === 0 ? "Sign In" : "Sign Up"}
         </Text>
       </TouchableOpacity>
     </View>

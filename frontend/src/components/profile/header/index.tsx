@@ -1,15 +1,16 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import { Avatar } from "react-native-paper";
-import { buttonStyles } from "../../../styles";
-import styles from "./styles";
-import { RootState } from "../../../redux/store";
+import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../navigation/main";
+import { View, Text, TouchableOpacity } from "react-native";
+import { Avatar } from "react-native-paper";
+
+import styles from "./styles";
 import { FIREBASE_AUTH } from "../../../../firebaseConfig";
 import { useFollowing } from "../../../hooks/useFollowing";
-import { Feather } from "@expo/vector-icons";
 import { useFollowingMutation } from "../../../hooks/useFollowingMutation";
+import { RootStackParamList } from "../../../navigation/main";
+import { RootState } from "../../../redux/store";
+import { buttonStyles } from "../../../styles";
 
 /**
  * Renders the header of the user profile and
@@ -80,7 +81,7 @@ export default function ProfileHeader({
   return (
     user && (
       <View style={styles.container}>
-        <Avatar.Icon size={80} icon={"account"} />
+        <Avatar.Icon size={80} icon="account" />
         <Text style={styles.emailText}>{user.email}</Text>
         <View style={styles.counterContainer}>
           <View style={styles.counterItemContainer}>

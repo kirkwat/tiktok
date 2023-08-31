@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { changeFollowState } from "../services/user";
+
 import { keys } from "./queryKeys";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { changeFollowState } from "../services/user";
 
 /**
  * Mutate the state of the follow cache system
@@ -26,9 +27,9 @@ export const useFollowingMutation = (options = {}) => {
       queryClient.setQueryData(
         keys.userFollowing(
           FIREBASE_AUTH.currentUser?.uid,
-          variables.otherUserId
+          variables.otherUserId,
         ),
-        !variables.isFollowing
+        !variables.isFollowing,
       );
     },
   });

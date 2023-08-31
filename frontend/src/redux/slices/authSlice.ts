@@ -3,9 +3,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebaseConfig";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
+
 import { getPostsByUser } from "./postSlice";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebaseConfig";
 import { User } from "../../../types";
 
 export const userAuthStateListener = createAsyncThunk(
@@ -19,7 +20,7 @@ export const userAuthStateListener = createAsyncThunk(
         dispatch(setUserState({ currentUser: null, loaded: true }));
       }
     });
-  }
+  },
 );
 
 export const getCurrentUserData = createAsyncThunk(
@@ -40,12 +41,12 @@ export const getCurrentUserData = createAsyncThunk(
           if (res.exists()) {
             dispatch(setUserState({ currentUser: res.data(), loaded: true }));
           }
-        }
+        },
       );
     } else {
       console.log("No user is signed in.");
     }
-  }
+  },
 );
 
 export const login = createAsyncThunk(
@@ -53,7 +54,7 @@ export const login = createAsyncThunk(
   async (payload: { email: string; password: string }) => {
     const { email, password } = payload;
     await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-  }
+  },
 );
 
 export const register = createAsyncThunk(
@@ -61,7 +62,7 @@ export const register = createAsyncThunk(
   async (payload: { email: string; password: string }) => {
     const { email, password } = payload;
     await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
-  }
+  },
 );
 
 interface AuthState {

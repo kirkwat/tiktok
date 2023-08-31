@@ -1,6 +1,7 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
+import { View, Text, TouchableOpacity } from "react-native";
+
+import styles from "./styles";
 import { RootState } from "../../../redux/store";
 
 export default function ProfileNavBar({
