@@ -1,12 +1,11 @@
-import { Feather } from "@expo/vector-icons";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { View } from "react-native";
-
-import { FIREBASE_AUTH } from "../../../firebaseConfig";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { Feather } from "@expo/vector-icons";
 import CameraScreen from "../../screens/camera";
 import ProfileScreen from "../../screens/profile";
 import SearchScreen from "../../screens/search";
 import FeedNavigation from "../feed";
+import { FIREBASE_AUTH } from "../../../firebaseConfig";
 
 export type HomeStackParamList = {
   feed: undefined;
@@ -19,7 +18,7 @@ export type HomeStackParamList = {
 const Tab = createMaterialBottomTabNavigator<HomeStackParamList>();
 
 const EmptyScreen = () => {
-  return <View />;
+  return <View></View>;
 };
 
 export default function HomeScreen() {

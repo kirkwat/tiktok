@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { View } from "react-native";
-
-import styles from "./styles";
 import AuthDetails from "../../components/auth/details";
 import AuthMenu from "../../components/auth/menu";
+import styles from "./styles";
 
 /**
  * Function that renders a component responsible for being the

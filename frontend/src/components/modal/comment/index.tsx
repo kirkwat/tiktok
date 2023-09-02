@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -8,17 +7,17 @@ import {
   FlatList,
 } from "react-native";
 import { useSelector } from "react-redux";
-
-import CommentItem from "./item";
 import styles from "./styles";
-import { Post, Comment } from "../../../../types";
-import { RootState } from "../../../redux/store";
+import { Ionicons } from "@expo/vector-icons";
 import {
   addComment,
   clearCommentListener,
   commentListener,
 } from "../../../services/posts";
+import CommentItem from "./item";
 import { generalStyles } from "../../../styles";
+import { RootState } from "../../../redux/store";
+import { Post, Comment } from "../../../../types";
 
 const CommentModal = ({ post }: { post: Post }) => {
   const [comment, setComment] = useState("");
@@ -31,7 +30,7 @@ const CommentModal = ({ post }: { post: Post }) => {
   }, []);
 
   const handleCommentSend = () => {
-    if (comment.length === 0) {
+    if (comment.length == 0) {
       return;
     }
     setComment("");
@@ -64,7 +63,7 @@ const CommentModal = ({ post }: { post: Post }) => {
           style={styles.input}
         />
         <TouchableOpacity onPress={() => handleCommentSend()}>
-          <Ionicons name="arrow-up-circle" size={34} color="crimson" />
+          <Ionicons name="arrow-up-circle" size={34} color={"crimson"} />
         </TouchableOpacity>
       </View>
     </View>

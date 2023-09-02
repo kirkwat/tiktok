@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-
-import { keys } from "./queryKeys";
 import { getIsFollowing } from "../services/user";
+import { keys } from "./queryKeys";
 
 /**
  * hook meant to fetch a user using react-query in order
@@ -16,11 +15,11 @@ import { getIsFollowing } from "../services/user";
 export const useFollowing = (
   userId: string,
   otherUserId: string,
-  options = {},
+  options = {}
 ) => {
   return useQuery(
     keys.userFollowing(userId, otherUserId),
     () => getIsFollowing(userId, otherUserId),
-    options,
+    options
   );
 };

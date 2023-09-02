@@ -12,10 +12,9 @@ import {
   onSnapshot,
   where,
 } from "firebase/firestore";
-import { Dispatch, SetStateAction } from "react";
-
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { Post, Comment } from "../../types";
+import { Dispatch, SetStateAction } from "react";
 
 let commentListenerInstance: (() => void) | null = null;
 
@@ -53,11 +52,11 @@ export const getFeed = (): Promise<Post[]> => {
 export const getLikeById = async (postId: string, uid: string) => {
   try {
     const likeDoc = await getDoc(
-      doc(FIREBASE_DB, "post", postId, "likes", uid),
+      doc(FIREBASE_DB, "post", postId, "likes", uid)
     );
     return likeDoc.exists();
-  } catch (e) {
-    throw new Error("Could not get like", e);
+  } catch (error) {
+    throw new Error("Could not get like");
   }
 };
 
@@ -70,7 +69,7 @@ export const getLikeById = async (postId: string, uid: string) => {
 export const updateLike = async (
   postId: string,
   uid: string,
-  currentLikeState: boolean,
+  currentLikeState: boolean
 ) => {
   const likeDocRef = doc(FIREBASE_DB, "post", postId, "likes", uid);
 
@@ -80,15 +79,15 @@ export const updateLike = async (
     } else {
       await setDoc(likeDocRef, {});
     }
-  } catch (e) {
-    throw new Error("Could not update like", e);
+  } catch (error) {
+    throw new Error("Could not update like");
   }
 };
 
 export const addComment = async (
   postId: string,
   creator: string,
-  comment: string,
+  comment: string
 ) => {
   try {
     await addDoc(collection(FIREBASE_DB, "post", postId, "comments"), {
@@ -103,11 +102,11 @@ export const addComment = async (
 
 export const commentListener = (
   postId: string,
-  setCommentList: Dispatch<SetStateAction<Comment[]>>,
+  setCommentList: Dispatch<SetStateAction<Comment[]>>
 ) => {
   const commentsQuery = query(
     collection(FIREBASE_DB, "post", postId, "comments"),
-    orderBy("creation", "desc"),
+    orderBy("creation", "desc")
   );
 
   const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
@@ -133,8 +132,9 @@ export const clearCommentListener = () => {
 };
 
 export const getPostsByUserId = (
-  uid = FIREBASE_AUTH.currentUser?.uid,
+  uid = FIREBASE_AUTH.currentUser?.uid
 ): Promise<Post[]> => {
+
   return new Promise((resolve, reject) => {
     if (!uid) {
       reject(new Error("User ID is not set"));
@@ -144,11 +144,11 @@ export const getPostsByUserId = (
     const q = query(
       collection(FIREBASE_DB, "post"),
       where("creator", "==", uid),
-      orderBy("creation", "desc"),
+      orderBy("creation", "desc")
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const posts = snapshot.docs.map((doc) => {
+      let posts = snapshot.docs.map((doc) => {
         const data = doc.data();
         const id = doc.id;
         return { id, ...data } as Post;

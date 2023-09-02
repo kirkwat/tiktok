@@ -1,10 +1,9 @@
 import BottomSheet from "@gorhom/bottom-sheet";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import CommentModal from "./comment";
-import { clearModal } from "../../redux/slices/modalSlice";
 import { AppDispatch, RootState } from "../../redux/store";
+import { clearModal } from "../../redux/slices/modalSlice";
 
 const Modal = () => {
   const modalState = useSelector((state: RootState) => state.modal);
@@ -19,16 +18,15 @@ const Modal = () => {
 
   const renderContent = () => {
     switch (modalState.modalType) {
-    case 0:
-      if (modalState.data) {
-        return <CommentModal post={modalState.data} />;
-      }
-      return <></>;
-    default:
-      return <></>;
+      case 0:
+        if (modalState.data) {
+          return <CommentModal post={modalState.data} />;
+        }
+        return <></>;
+      default:
+        return <></>;
     }
   };
-
   const onClose = () => {
     dispatch(clearModal());
   };

@@ -1,21 +1,20 @@
-import { RouteProp } from "@react-navigation/native";
-import { useState, useContext, useEffect } from "react";
 import { ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
 import styles from "./styles";
-import { Post } from "../../../types";
-import ProfileHeader from "../../components/profile/header";
 import ProfileNavBar from "../../components/profile/navBar";
+import ProfileHeader from "../../components/profile/header";
 import ProfilePostList from "../../components/profile/postList";
-import { useUser } from "../../hooks/useUser";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useState, useContext, useEffect } from "react";
 import {
   CurrentUserProfileItemInViewContext,
   FeedStackParamList,
 } from "../../navigation/feed";
-import { HomeStackParamList } from "../../navigation/home";
-import { RootStackParamList } from "../../navigation/main";
+import { useUser } from "../../hooks/useUser";
 import { getPostsByUserId } from "../../services/posts";
+import { Post } from "../../../types";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../navigation/main";
+import { HomeStackParamList } from "../../navigation/home";
 
 type ProfileScreenRouteProp =
   | RouteProp<RootStackParamList, "profileOther">

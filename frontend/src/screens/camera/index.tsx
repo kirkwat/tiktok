@@ -1,9 +1,7 @@
 //! THIS NEEDS TO BE TESTED
 
-import { Feather } from "@expo/vector-icons";
-import { useIsFocused } from "@react-navigation/core";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import {
   Camera,
   requestCameraPermissionsAsync,
@@ -14,10 +12,12 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import * as VideoThumbnails from "expo-video-thumbnails";
-import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { useIsFocused } from "@react-navigation/core";
+import { Feather } from "@expo/vector-icons";
 
 import styles from "./styles";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigation/main";
 
 /**
@@ -45,16 +45,16 @@ export default function CameraScreen() {
   useEffect(() => {
     (async () => {
       const cameraStatus = await requestCameraPermissionsAsync();
-      setHasCameraPermissions(cameraStatus.status === "granted");
+      setHasCameraPermissions(cameraStatus.status == "granted");
 
       const audioStatus = await requestMicrophonePermissionsAsync();
-      setHasAudioPermissions(audioStatus.status === "granted");
+      setHasAudioPermissions(audioStatus.status == "granted");
 
       const galleryStatus =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasGalleryPermissions(galleryStatus.status === "granted");
+      setHasGalleryPermissions(galleryStatus.status == "granted");
 
-      if (galleryStatus.status === "granted") {
+      if (galleryStatus.status == "granted") {
         const userGalleryMedia = await MediaLibrary.getAssetsAsync({
           sortBy: ["creationTime"],
           mediaType: ["video"],
@@ -75,7 +75,7 @@ export default function CameraScreen() {
         if (videoRecordPromise) {
           const data = await videoRecordPromise;
           const source = data.uri;
-          const sourceThumb = await generateThumbnail(source);
+          let sourceThumb = await generateThumbnail(source);
           if (sourceThumb) {
             navigation.navigate("savePost", { source, sourceThumb });
           }
@@ -122,7 +122,7 @@ export default function CameraScreen() {
   };
 
   if (!hasCameraPermissions || !hasAudioPermissions || !hasGalleryPermissions) {
-    return <View />;
+    return <View></View>;
   }
 
   return (
@@ -131,7 +131,7 @@ export default function CameraScreen() {
         <Camera
           ref={(ref) => setCameraRef(ref)}
           style={styles.camera}
-          ratio="16:9"
+          ratio={"16:9"}
           type={cameraType}
           flashMode={cameraFlash}
           onCameraReady={() => setIsCameraReady(true)}
@@ -145,11 +145,11 @@ export default function CameraScreen() {
             setCameraType(
               cameraType === CameraType.back
                 ? CameraType.front
-                : CameraType.back,
+                : CameraType.back
             )
           }
         >
-          <Feather name="refresh-ccw" size={24} color="white" />
+          <Feather name="refresh-ccw" size={24} color={"white"} />
           <Text style={styles.iconText}>Flip</Text>
         </TouchableOpacity>
 
@@ -157,17 +157,17 @@ export default function CameraScreen() {
           style={styles.sideBarButton}
           onPress={() =>
             setCameraFlash(
-              cameraFlash === FlashMode.off ? FlashMode.torch : FlashMode.off,
+              cameraFlash === FlashMode.off ? FlashMode.torch : FlashMode.off
             )
           }
         >
-          <Feather name="zap" size={24} color="white" />
+          <Feather name="zap" size={24} color={"white"} />
           <Text style={styles.iconText}>Flash</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.bottomBarContainer}>
-        <View style={{ flex: 1 }} />
+        <View style={{ flex: 1 }}></View>
         <View style={styles.recordButtonContainer}>
           <TouchableOpacity
             disabled={!isCameraReady}
@@ -181,7 +181,7 @@ export default function CameraScreen() {
             onPress={() => pickFromGallery()}
             style={styles.galleryButton}
           >
-            {galleryItems[0] === undefined ? (
+            {galleryItems[0] == undefined ? (
               <></>
             ) : (
               <Image

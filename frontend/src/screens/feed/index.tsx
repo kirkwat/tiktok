@@ -1,15 +1,14 @@
-import { RouteProp } from "@react-navigation/native";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { FlatList, View, Dimensions, ViewToken } from "react-native";
-
 import styles from "./styles";
-import { Post } from "../../../types";
 import PostSingle, { PostSingleHandles } from "../../components/general/post";
-import useMaterialNavBarHeight from "../../hooks/useMaterialNavBarHeight";
-import { FeedStackParamList } from "../../navigation/feed";
-import { HomeStackParamList } from "../../navigation/home";
-import { RootStackParamList } from "../../navigation/main";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { getFeed, getPostsByUserId } from "../../services/posts";
+import { Post } from "../../../types";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../navigation/main";
+import { HomeStackParamList } from "../../navigation/home";
+import { FeedStackParamList } from "../../navigation/feed";
+import useMaterialNavBarHeight from "../../hooks/useMaterialNavBarHeight";
 
 type FeedScreenRouteProp =
   | RouteProp<RootStackParamList, "userPosts">
@@ -67,7 +66,7 @@ export default function FeedScreen({ route }: { route: FeedScreenRouteProp }) {
           }
         }
       });
-    },
+    }
   );
 
   const feedItemHeight =
@@ -109,7 +108,7 @@ export default function FeedScreen({ route }: { route: FeedScreenRouteProp }) {
         renderItem={renderItem}
         pagingEnabled
         keyExtractor={(item) => item.id}
-        decelerationRate="fast"
+        decelerationRate={"fast"}
         onViewableItemsChanged={onViewableItemsChanged.current}
       />
     </View>

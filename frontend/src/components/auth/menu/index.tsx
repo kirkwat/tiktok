@@ -1,8 +1,7 @@
-import { Feather } from "@expo/vector-icons";
 import { Dispatch, SetStateAction } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-
 import styles from "./styles";
+import { Feather } from "@expo/vector-icons";
 
 export interface AuthMenuProps {
   authPage: number;
@@ -32,7 +31,7 @@ export default function AuthMenu({
     <View style={styles.container}>
       <View style={styles.containerMain}>
         <Text style={styles.headerText}>
-          {authPage === 0 ? "sign in" : "sign up"}
+          {authPage == 0 ? "sign in" : "sign up"}
         </Text>
         <TouchableOpacity
           style={styles.providerButton}
@@ -46,9 +45,9 @@ export default function AuthMenu({
 
       <TouchableOpacity
         style={styles.containerBottomButton}
-        onPress={() => (authPage === 0 ? setAuthPage(1) : setAuthPage(0))}
+        onPress={() => (authPage == 0 ? setAuthPage(1) : setAuthPage(0))}
       >
-        {authPage === 0 ? (
+        {authPage == 0 ? (
           <Text>
             Don't have an account?{" "}
             <Text style={styles.bottomButtonText}>Sign up</Text>

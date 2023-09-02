@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
 import { Post } from "../../../types";
 
 interface CommentModalState {

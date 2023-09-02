@@ -1,8 +1,11 @@
-import { configureStore, Action, ThunkDispatch } from "@reduxjs/toolkit";
-
+import {
+  configureStore,
+  Action,
+  ThunkDispatch,
+} from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice";
-import modalSlice from "./slices/modalSlice";
 import postSlice from "./slices/postSlice";
+import modalSlice from "./slices/modalSlice";
 
 export const store = configureStore({
   reducer: {

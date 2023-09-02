@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebaseConfig";
 import {
   addDoc,
   collection,
@@ -8,11 +8,10 @@ import {
   serverTimestamp,
   where,
 } from "firebase/firestore";
-import uuid from "uuid-random";
-
-import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebaseConfig";
-import { Post } from "../../../types";
 import { saveMediaToStorage } from "../../services/utils";
+import uuid from "uuid-random";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Post } from "../../../types";
 
 interface PostState {
   loading: boolean;
@@ -38,7 +37,7 @@ export const createPost = createAsyncThunk(
       video: string;
       thumbnail: string;
     },
-    { rejectWithValue },
+    { rejectWithValue }
   ) => {
     if (FIREBASE_AUTH.currentUser) {
       try {
@@ -46,11 +45,11 @@ export const createPost = createAsyncThunk(
         const [videoDownloadUrl, thumbnailDownloadUrl] = await Promise.all([
           saveMediaToStorage(
             video,
-            `post/${FIREBASE_AUTH.currentUser.uid}/${storagePostId}/video`,
+            `post/${FIREBASE_AUTH.currentUser.uid}/${storagePostId}/video`
           ),
           saveMediaToStorage(
             thumbnail,
-            `post/${FIREBASE_AUTH.currentUser.uid}/${storagePostId}/thumbnail`,
+            `post/${FIREBASE_AUTH.currentUser.uid}/${storagePostId}/thumbnail`
           ),
         ]);
 
@@ -69,7 +68,7 @@ export const createPost = createAsyncThunk(
     } else {
       return rejectWithValue(new Error("User not authenticated"));
     }
-  },
+  }
 );
 
 export const getPostsByUser = createAsyncThunk(
@@ -80,7 +79,7 @@ export const getPostsByUser = createAsyncThunk(
       const q = query(
         collection(FIREBASE_DB, "post"),
         where("creator", "==", uid),
-        orderBy("creation", "desc"),
+        orderBy("creation", "desc")
       );
 
       const querySnapshot = await getDocs(q);
@@ -99,7 +98,7 @@ export const getPostsByUser = createAsyncThunk(
       console.error("Failed to get posts: ", error);
       return rejectWithValue(error);
     }
-  },
+  }
 );
 
 const postSlice = createSlice({
@@ -131,7 +130,7 @@ const postSlice = createSlice({
         (state, action: PayloadAction<any[]>) => {
           state.loading = false;
           state.currentUserPosts = action.payload;
-        },
+        }
       )
       .addCase(getPostsByUser.rejected, (state, action) => {
         state.loading = false;

@@ -1,15 +1,14 @@
 import { RouteProp, useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import { Divider } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import styles from "./styles";
 import NavBarGeneral from "../../../../components/general/navbar";
-import { RootStackParamList } from "../../../../navigation/main";
 import { saveUserField } from "../../../../services/user";
 import { generalStyles } from "../../../../styles";
+import styles from "./styles";
+import { RootStackParamList } from "../../../../navigation/main";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface EditProfileFieldScreenProps {
   route: RouteProp<RootStackParamList, "editProfileField">;
