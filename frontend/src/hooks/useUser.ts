@@ -11,11 +11,11 @@ import { getUserById } from "../services/user";
  * @param {Object} options to be passed along to useQuery
  * @returns
  */
-export const useUser = (userId: string, options = {}) => {
+export const useUser = (userId: string | null, options = {}) => {
   return useQuery(
     keys.user(userId),
     () => {
-      if (userId === "") {
+      if (!userId) {
         return null;
       }
       return getUserById(userId);

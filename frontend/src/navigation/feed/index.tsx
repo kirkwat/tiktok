@@ -15,9 +15,16 @@ export type FeedStackParamList = {
 const { Screen, Navigator } =
   createMaterialTopTabNavigator<FeedStackParamList>();
 
-export const CurrentUserProfileItemInViewContext = createContext<string | null>(
-  null
-);
+interface CurrentUserProfileItemInViewContextType {
+  currentUserProfileItemInView: string | null;
+  setCurrentUserProfileItemInView: Dispatch<SetStateAction<string | null>>;
+}
+
+export const CurrentUserProfileItemInViewContext =
+  createContext<CurrentUserProfileItemInViewContextType>({
+    currentUserProfileItemInView: null,
+    setCurrentUserProfileItemInView: () => {},
+  });
 
 const FeedNavigation = () => {
   const [currentUserProfileItemInView, setCurrentUserProfileItemInView] =
@@ -25,7 +32,10 @@ const FeedNavigation = () => {
 
   return (
     <CurrentUserProfileItemInViewContext.Provider
-      value={currentUserProfileItemInView}
+      value={{
+        currentUserProfileItemInView,
+        setCurrentUserProfileItemInView,
+      }}
     >
       <Navigator initialRouteName="feedList" tabBar={() => <></>}>
         <Screen

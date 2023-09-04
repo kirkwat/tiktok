@@ -9,13 +9,18 @@ interface NavBarGeneralProps {
   leftButton?: {
     display: boolean;
     name?: keyof typeof Feather.glyphMap;
+  };
+  rightButton?: {
+    display: boolean;
+    name?: keyof typeof Feather.glyphMap;
     action?: () => void;
   };
 }
 
 export default function NavBarGeneral({
   title = "NavBarGeneral",
-  leftButton = { display: false },
+  leftButton = { display: true },
+  rightButton = { display: false },
 }: NavBarGeneralProps) {
   const navigation = useNavigation();
 
@@ -23,9 +28,9 @@ export default function NavBarGeneral({
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.goBack()}
+        onPress={() => (leftButton.display ? navigation.goBack() : null)}
       >
-        <Feather name="arrow-left" size={26} />
+        {leftButton.display && <Feather name="arrow-left" size={26} />}
       </TouchableOpacity>
 
       <Text style={styles.title}>{title}</Text>
@@ -33,14 +38,14 @@ export default function NavBarGeneral({
       <TouchableOpacity
         style={styles.button}
         onPress={() =>
-          leftButton.display && leftButton.action ? leftButton.action() : null
+          rightButton.display && rightButton.action
+            ? rightButton.action()
+            : null
         }
       >
-        <Feather
-          name={leftButton.name || "save"}
-          size={26}
-          color={leftButton.display ? "pink" : "white"}
-        />
+        {rightButton.display && (
+          <Feather name={rightButton.name} size={26} color={"pink"} />
+        )}
       </TouchableOpacity>
     </View>
   );

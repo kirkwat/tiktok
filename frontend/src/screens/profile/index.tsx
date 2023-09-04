@@ -29,22 +29,23 @@ export default function ProfileScreen({
   const { initialUserId } = route.params;
   const [userPosts, setUserPosts] = useState<Post[]>([]);
 
-  let providerUserId = "";
-  if (CurrentUserProfileItemInViewContext != null) {
-    providerUserId = useContext(CurrentUserProfileItemInViewContext) ?? "";
-  }
+  const providerUserId = useContext(CurrentUserProfileItemInViewContext);
 
-  const user = useUser(initialUserId ? initialUserId : providerUserId).data;
+  const userQuery = useUser(
+    initialUserId ? initialUserId : providerUserId.currentUserProfileItemInView
+  );
+
+  const user = userQuery.data;
 
   useEffect(() => {
-    if (user === undefined) {
+    if (!user) {
       return;
     }
 
     getPostsByUserId(user?.uid).then((posts) => setUserPosts(posts));
   }, [user]);
 
-  if (user === undefined) {
+  if (!user) {
     return <></>;
   }
 

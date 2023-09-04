@@ -81,7 +81,7 @@ export default function PostSingleOverlay({
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("profileOther", {
-              initialUserId: user?.uid,
+              initialUserId: user?.uid ?? "",
             })
           }
         >

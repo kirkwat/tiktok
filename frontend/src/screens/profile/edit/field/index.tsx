@@ -30,7 +30,7 @@ export default function EditProfileFieldScreen({
     <SafeAreaView style={styles.container}>
       <NavBarGeneral
         title={title}
-        leftButton={{ display: true, name: "save", action: onSave }}
+        rightButton={{ display: true, name: "save", action: onSave }}
       />
       <Divider />
       <View style={styles.mainContainer}>

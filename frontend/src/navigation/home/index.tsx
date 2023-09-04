@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Feather } from "@expo/vector-icons";
 import CameraScreen from "../../screens/camera";
@@ -6,6 +5,8 @@ import ProfileScreen from "../../screens/profile";
 import SearchScreen from "../../screens/search";
 import FeedNavigation from "../feed";
 import { FIREBASE_AUTH } from "../../../firebaseConfig";
+import ChatScreen from "../../screens/chat/list";
+import { useChats } from "../../hooks/useChats";
 
 export type HomeStackParamList = {
   feed: undefined;
@@ -17,11 +18,9 @@ export type HomeStackParamList = {
 
 const Tab = createMaterialBottomTabNavigator<HomeStackParamList>();
 
-const EmptyScreen = () => {
-  return <View></View>;
-};
-
 export default function HomeScreen() {
+  useChats();
+
   return (
     <Tab.Navigator
       barStyle={{ backgroundColor: "black" }}
@@ -56,7 +55,7 @@ export default function HomeScreen() {
       />
       <Tab.Screen
         name="Inbox"
-        component={EmptyScreen}
+        component={ChatScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Feather name="message-square" size={24} color={color} />
@@ -71,7 +70,7 @@ export default function HomeScreen() {
             <Feather name="user" size={24} color={color} />
           ),
         }}
-        initialParams={{ initialUserId: FIREBASE_AUTH.currentUser?.uid }}
+        initialParams={{ initialUserId: FIREBASE_AUTH.currentUser?.uid ?? "" }}
       />
     </Tab.Navigator>
   );

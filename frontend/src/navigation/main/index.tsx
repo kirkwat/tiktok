@@ -13,6 +13,7 @@ import EditProfileFieldScreen from "../../screens/profile/edit/field";
 import Modal from "../../components/modal";
 import FeedScreen from "../../screens/feed";
 import ProfileScreen from "../../screens/profile";
+import ChatSingleScreen from "../../screens/chat/single";
 
 export type RootStackParamList = {
   home: undefined;
@@ -22,6 +23,7 @@ export type RootStackParamList = {
   savePost: { source: string; sourceThumb: string };
   editProfile: undefined;
   editProfileField: { title: string; field: string; value: string };
+  chatSingle: { chatId?: string; contactId?: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -78,6 +80,11 @@ export default function Route() {
             <Stack.Screen
               name="editProfileField"
               component={EditProfileFieldScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="chatSingle"
+              component={ChatSingleScreen}
               options={{ headerShown: false }}
             />
           </>

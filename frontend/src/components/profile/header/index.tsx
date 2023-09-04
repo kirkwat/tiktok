@@ -28,11 +28,14 @@ export default function ProfileHeader({
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  let isFollowing = false;
-  if (FIREBASE_AUTH.currentUser?.uid && user?.uid) {
-    isFollowing =
-      useFollowing(FIREBASE_AUTH.currentUser?.uid, user?.uid).data ?? false;
-  }
+  const followingData = useFollowing(
+    FIREBASE_AUTH.currentUser?.uid ?? null,
+    user?.uid ?? null
+  );
+  const isFollowing =
+    FIREBASE_AUTH.currentUser?.uid && user?.uid && followingData.data
+      ? followingData.data
+      : false;
 
   const isFollowingMutation = useFollowingMutation();
 
@@ -40,7 +43,14 @@ export default function ProfileHeader({
     if (isFollowing) {
       return (
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity style={buttonStyles.grayOutlinedButton}>
+          <TouchableOpacity
+            style={buttonStyles.grayOutlinedButton}
+            onPress={() => {
+              if (user?.uid) {
+                navigation.navigate("chatSingle", { contactId: user.uid });
+              }
+            }}
+          >
             <Text style={buttonStyles.grayOutlinedButtonText}>Message</Text>
           </TouchableOpacity>
           <TouchableOpacity

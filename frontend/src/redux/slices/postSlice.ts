@@ -88,7 +88,7 @@ export const getPostsByUser = createAsyncThunk(
       const posts = querySnapshot.docs.map((doc) => {
         const data = doc.data();
         const id = doc.id;
-        return { id, ...data };
+        return { id, ...data } as Post;
       });
       // Dispatch action to update the state. Replace `CURRENT_USER_POSTS_UPDATE` with the actual action creator
       dispatch({ type: "CURRENT_USER_POSTS_UPDATE", payload: posts });
@@ -127,7 +127,7 @@ const postSlice = createSlice({
       })
       .addCase(
         getPostsByUser.fulfilled,
-        (state, action: PayloadAction<any[]>) => {
+        (state, action: PayloadAction<Post[]>) => {
           state.loading = false;
           state.currentUserPosts = action.payload;
         }
@@ -139,5 +139,4 @@ const postSlice = createSlice({
   },
 });
 
-// Export your action creators and reducers
 export default postSlice.reducer;

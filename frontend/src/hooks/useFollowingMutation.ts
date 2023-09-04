@@ -15,6 +15,7 @@ import { FIREBASE_AUTH } from "../../firebaseConfig";
  */
 export const useFollowingMutation = (options = {}) => {
   const queryClient = useQueryClient();
+
   return useMutation(changeFollowState, {
     ...options,
     onMutate: (variables) => {

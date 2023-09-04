@@ -24,3 +24,20 @@ export interface User {
 export interface SearchUser extends User {
   id: string;
 }
+
+export interface Chat {
+  id: string;
+  members: string[];
+  lastMessage: string;
+  lastUpdate: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  messages: Message[];
+}
+
+export interface Message {
+  id: string;
+  creator: string;
+  message: string;
+}

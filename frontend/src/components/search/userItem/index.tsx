@@ -7,13 +7,14 @@ import { RootStackParamList } from "../../../navigation/main";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function SearchUserItem({ item }: { item: SearchUser }) {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() =>
-        navigation.navigate("profileOther", { initialUserId: item?.uid })
+        navigation.navigate("profileOther", { initialUserId: item?.uid ?? "" })
       }
     >
       <Text style={styles.text}>{item.displayName}</Text>
