@@ -26,14 +26,6 @@ export const getCurrentUserData = createAsyncThunk(
   "auth/getCurrentUserData",
   async (_, { dispatch }) => {
     if (FIREBASE_AUTH.currentUser) {
-      try {
-        await addDoc(collection(FIREBASE_DB, "user"), {
-          uid: FIREBASE_AUTH.currentUser.uid,
-        });
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-
       const unsub = onSnapshot(
         doc(FIREBASE_DB, "user", FIREBASE_AUTH.currentUser.uid),
         (res) => {

@@ -31,7 +31,7 @@ export default function AuthMenu({
     <View style={styles.container}>
       <View style={styles.containerMain}>
         <Text style={styles.headerText}>
-          {authPage == 0 ? "sign in" : "sign up"}
+          {authPage == 0 ? "Sign In" : "Sign Up"}
         </Text>
         <TouchableOpacity
           style={styles.providerButton}
@@ -50,12 +50,12 @@ export default function AuthMenu({
         {authPage == 0 ? (
           <Text>
             Don't have an account?{" "}
-            <Text style={styles.bottomButtonText}>Sign up</Text>
+            <Text style={styles.bottomButtonText}>Sign Up</Text>
           </Text>
         ) : (
           <Text>
             Already have an account?{" "}
-            <Text style={styles.bottomButtonText}>Sign in</Text>
+            <Text style={styles.bottomButtonText}>Sign In</Text>
           </Text>
         )}
       </TouchableOpacity>

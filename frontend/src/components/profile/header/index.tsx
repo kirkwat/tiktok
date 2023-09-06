@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 import { buttonStyles } from "../../../styles";
 import styles from "./styles";
@@ -90,7 +90,11 @@ export default function ProfileHeader({
   return (
     user && (
       <View style={styles.container}>
-        <Avatar.Icon size={80} icon={"account"} />
+        {user.photoURL ? (
+          <Image style={styles.avatar} source={{ uri: user?.photoURL }} />
+        ) : (
+          <Avatar.Icon size={80} icon={"account"} />
+        )}
         <Text style={styles.emailText}>{user.email}</Text>
         <View style={styles.counterContainer}>
           <View style={styles.counterItemContainer}>

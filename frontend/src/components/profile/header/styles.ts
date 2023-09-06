@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
     color: "gray",
     fontSize: 11,
   },
+  avatar: {
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+  },
 });
 
 export default styles;

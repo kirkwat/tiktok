@@ -18,6 +18,8 @@ const ChatListItem = ({ chat }: { chat: Chat }) => {
       : chat.members[0]
   );
 
+  const date = new Date(chat.lastUpdate.seconds * 1000);
+
   return (
     <TouchableOpacity
       style={styles.container}
@@ -34,7 +36,7 @@ const ChatListItem = ({ chat }: { chat: Chat }) => {
       </View>
       <Text>
         {chat.lastUpdate
-          ? new Date(chat.lastUpdate.seconds * 1000).toISOString().slice(0, 10)
+          ? `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
           : "Now"}
       </Text>
     </TouchableOpacity>

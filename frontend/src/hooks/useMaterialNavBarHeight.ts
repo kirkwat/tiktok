@@ -1,11 +1,11 @@
-//! FIX VALUES TO FIT DEVICE
+//! FIX VALUES TO FIT DEVICE (CURRENTLY SET FOR PIXEL PRO 7)
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const useMaterialNavBarHeight = (withoutBottomTabs: boolean) => {
   const { bottom, top } = useSafeAreaInsets();
 
-  return bottom - Math.floor(top) + (withoutBottomTabs ? 0 : 54);
+  return bottom - Math.floor(top) + (withoutBottomTabs ? 24 : 104);
 };
 
 export default useMaterialNavBarHeight;
