@@ -37,6 +37,9 @@ export default function PostSingleOverlay({
     state: false,
     counter: post.likesCount,
   });
+  const [currentCommentsCount, setCurrentCommentsCount] = useState(
+    post.commentsCount
+  );
 
   useEffect(() => {
     if (currentUser) {
@@ -71,6 +74,10 @@ export default function PostSingleOverlay({
       }),
     []
   );
+
+  const handleUpdateCommentCount = () => {
+    setCurrentCommentsCount((prevCount) => prevCount + 1);
+  };
 
   return (
     <View style={styles.container}>
@@ -117,12 +124,13 @@ export default function PostSingleOverlay({
                 open: true,
                 data: post,
                 modalType: 0,
+                onCommentSend: handleUpdateCommentCount,
               })
             )
           }
         >
           <Ionicons color="white" size={40} name={"chatbubble"} />
-          <Text style={styles.actionButtonText}>{post.commentsCount}</Text>
+          <Text style={styles.actionButtonText}>{currentCommentsCount}</Text>
         </TouchableOpacity>
       </View>
     </View>

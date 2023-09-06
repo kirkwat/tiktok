@@ -20,7 +20,13 @@ import { RootState } from "../../../redux/store";
 import { Post, Comment } from "../../../../types";
 import { Avatar } from "react-native-paper";
 
-const CommentModal = ({ post }: { post: Post }) => {
+const CommentModal = ({
+  post,
+  onCommentSend,
+}: {
+  post: Post;
+  onCommentSend?: () => void;
+}) => {
   const [comment, setComment] = useState("");
   const [commentList, setCommentList] = useState<Comment[]>([]);
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
@@ -37,6 +43,9 @@ const CommentModal = ({ post }: { post: Post }) => {
     setComment("");
     if (currentUser) {
       addComment(post.id, currentUser.uid, comment);
+      if (onCommentSend) {
+        onCommentSend();
+      }
     }
   };
 

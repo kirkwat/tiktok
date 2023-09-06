@@ -20,7 +20,12 @@ const Modal = () => {
     switch (modalState.modalType) {
       case 0:
         if (modalState.data) {
-          return <CommentModal post={modalState.data} />;
+          return (
+            <CommentModal
+              post={modalState.data}
+              onCommentSend={modalState.onCommentSend}
+            />
+          );
         }
         return <></>;
       default:
