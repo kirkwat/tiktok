@@ -5,7 +5,6 @@ import ProfileScreen from "../../screens/profile";
 
 export type FeedStackParamList = {
   feedList: {
-    setCurrentUserProfileItemInView: Dispatch<SetStateAction<string | null>>;
     creator: string;
     profile: boolean;
   };
@@ -41,7 +40,7 @@ const FeedNavigation = () => {
         <Screen
           name="feedList"
           component={FeedScreen}
-          initialParams={{ setCurrentUserProfileItemInView, profile: false }}
+          initialParams={{ profile: false }}
         />
         <Screen
           name="feedProfile"

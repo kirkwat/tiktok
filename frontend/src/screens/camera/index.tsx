@@ -1,5 +1,3 @@
-//! THIS NEEDS TO BE TESTED
-
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import {

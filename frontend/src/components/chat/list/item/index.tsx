@@ -7,6 +7,7 @@ import { FIREBASE_AUTH } from "../../../../../firebaseConfig";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../../navigation/main";
 import { Chat } from "../../../../../types";
+import { Avatar } from "react-native-paper";
 
 const ChatListItem = ({ chat }: { chat: Chat }) => {
   const navigation =
@@ -18,25 +19,31 @@ const ChatListItem = ({ chat }: { chat: Chat }) => {
       : chat.members[0]
   );
 
-  const date = new Date(chat.lastUpdate.seconds * 1000);
-
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => navigation.navigate("chatSingle", { chatId: chat.id })}
     >
-      {userData && (
+      {userData && userData.photoURL ? (
         <Image style={styles.image} source={{ uri: userData.photoURL }} />
+      ) : (
+        <Avatar.Icon size={60} icon={"account"} />
       )}
       <View style={{ flex: 1 }}>
         {userData && (
-          <Text style={styles.userDisplayName}>{userData.displayName}</Text>
+          <Text style={styles.userDisplayName}>
+            {userData.displayName || userData.email}
+          </Text>
         )}
         <Text style={styles.lastMessage}>{chat.lastMessage}</Text>
       </View>
       <Text>
-        {chat.lastUpdate
-          ? `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+        {chat.lastUpdate && chat.lastUpdate.seconds
+          ? `${
+              new Date(chat.lastUpdate.seconds * 1000).getMonth() + 1
+            }/${new Date(chat.lastUpdate.seconds * 1000).getDate()}/${new Date(
+              chat.lastUpdate.seconds * 1000
+            ).getFullYear()}`
           : "Now"}
       </Text>
     </TouchableOpacity>

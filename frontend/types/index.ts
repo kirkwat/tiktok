@@ -17,8 +17,8 @@ export interface Comment {
 export interface User {
   uid: string;
   email: string;
-  displayName: string;
-  photoURL: string;
+  displayName: string | null;
+  photoURL?: string;
 }
 
 export interface SearchUser extends User {
@@ -29,9 +29,9 @@ export interface Chat {
   id: string;
   members: string[];
   lastMessage: string;
-  lastUpdate: {
-    seconds: number;
-    nanoseconds: number;
+  lastUpdate?: {
+    seconds?: number;
+    nanoseconds?: number;
   };
   messages: Message[];
 }

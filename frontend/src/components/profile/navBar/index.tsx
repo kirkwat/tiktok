@@ -14,7 +14,7 @@ export default function ProfileNavBar({
         <TouchableOpacity>
           <Feather name="search" size={20} />
         </TouchableOpacity>
-        <Text style={styles.text}>{user.displayName}</Text>
+        <Text style={styles.text}>{user.email}</Text>
         <TouchableOpacity>
           <Feather name="menu" size={24} />
         </TouchableOpacity>

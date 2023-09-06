@@ -91,11 +91,11 @@ export default function ProfileHeader({
     user && (
       <View style={styles.container}>
         {user.photoURL ? (
-          <Image style={styles.avatar} source={{ uri: user?.photoURL }} />
+          <Image style={styles.avatar} source={{ uri: user.photoURL }} />
         ) : (
           <Avatar.Icon size={80} icon={"account"} />
         )}
-        <Text style={styles.emailText}>{user.email}</Text>
+        <Text style={styles.emailText}>{user.displayName || user.email}</Text>
         <View style={styles.counterContainer}>
           <View style={styles.counterItemContainer}>
             <Text style={styles.counterNumberText}>0</Text>

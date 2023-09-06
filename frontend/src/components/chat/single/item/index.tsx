@@ -5,6 +5,7 @@ import { generalStyles } from "../../../../styles";
 import styles from "./styles";
 import { FIREBASE_AUTH } from "../../../../../firebaseConfig";
 import { Message } from "../../../../../types";
+import { Avatar } from "react-native-paper";
 
 const ChatSingleItem = ({ item }: { item: Message }) => {
   const { data: userData, isLoading } = useUser(item.creator);
@@ -20,11 +21,13 @@ const ChatSingleItem = ({ item }: { item: Message }) => {
     <View
       style={isCurrentUser ? styles.containerCurrent : styles.containerOther}
     >
-      {userData && (
+      {userData && userData.photoURL ? (
         <Image
           style={generalStyles.avatarSmall}
           source={{ uri: userData.photoURL }}
         />
+      ) : (
+        <Avatar.Icon size={32} icon={"account"} />
       )}
       <View
         style={

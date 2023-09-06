@@ -11,6 +11,7 @@ import { openCommentModal } from "../../../../redux/slices/modalSlice";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../../navigation/main";
+import { Avatar } from "react-native-paper";
 
 /**
  * Function that renders a component meant to be overlapped on
@@ -74,7 +75,7 @@ export default function PostSingleOverlay({
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.displayName}>{user.displayName}</Text>
+        <Text style={styles.displayName}>{user.displayName || user.email}</Text>
         <Text style={styles.description}>{post.description}</Text>
       </View>
       <View style={styles.leftContainer}>
@@ -85,7 +86,15 @@ export default function PostSingleOverlay({
             })
           }
         >
-          <Image style={styles.avatar} source={{ uri: user?.photoURL }} />
+          {user.photoURL ? (
+            <Image style={styles.avatar} source={{ uri: user.photoURL }} />
+          ) : (
+            <Avatar.Icon
+              style={styles.defaultAvatar}
+              size={50}
+              icon={"account"}
+            />
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}

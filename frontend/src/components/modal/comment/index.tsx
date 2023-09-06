@@ -18,6 +18,7 @@ import CommentItem from "./item";
 import { generalStyles } from "../../../styles";
 import { RootState } from "../../../redux/store";
 import { Post, Comment } from "../../../../types";
+import { Avatar } from "react-native-paper";
 
 const CommentModal = ({ post }: { post: Post }) => {
   const [comment, setComment] = useState("");
@@ -51,11 +52,13 @@ const CommentModal = ({ post }: { post: Post }) => {
         keyExtractor={(item) => item.id}
       />
       <View style={styles.containerInput}>
-        {currentUser && (
+        {currentUser && currentUser.photoURL ? (
           <Image
             style={generalStyles.avatarSmall}
             source={{ uri: currentUser.photoURL }}
           />
+        ) : (
+          <Avatar.Icon size={32} icon={"account"} />
         )}
         <TextInput
           value={comment}

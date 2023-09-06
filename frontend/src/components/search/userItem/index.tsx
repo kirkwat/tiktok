@@ -5,6 +5,7 @@ import { SearchUser } from "../../../../types";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../navigation/main";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Avatar } from "react-native-paper";
 
 export default function SearchUserItem({ item }: { item: SearchUser }) {
   const navigation =
@@ -17,8 +18,12 @@ export default function SearchUserItem({ item }: { item: SearchUser }) {
         navigation.navigate("profileOther", { initialUserId: item?.uid ?? "" })
       }
     >
-      <Text style={styles.text}>{item.displayName}</Text>
-      <Image style={styles.image} source={{ uri: item.photoURL }} />
+      <Text style={styles.text}>{item.displayName || item.email}</Text>
+      {item.photoURL ? (
+        <Image style={styles.image} source={{ uri: item.photoURL }} />
+      ) : (
+        <Avatar.Icon size={40} icon={"account"} />
+      )}
     </TouchableOpacity>
   );
 }

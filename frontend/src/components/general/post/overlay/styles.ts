@@ -30,6 +30,12 @@ const styles = StyleSheet.create({
     borderColor: "white",
     marginBottom: 30,
   },
+  defaultAvatar: {
+    marginBottom: 30,
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: "white",
+  },
   leftContainer: {
     alignItems: "center",
   },

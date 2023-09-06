@@ -32,16 +32,18 @@ export default function EditProfileScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <NavBarGeneral title="Edit Profile"/>
+      <NavBarGeneral title="Edit Profile" />
       <View style={styles.imageContainer}>
         <TouchableOpacity
           style={styles.imageViewContainer}
           onPress={() => chooseImage()}
         >
-          <Image
-            style={styles.image}
-            source={{ uri: auth.currentUser ? auth.currentUser.photoURL : "" }}
-          />
+          {auth.currentUser && (
+            <Image
+              style={styles.image}
+              source={{ uri: auth.currentUser.photoURL }}
+            />
+          )}
           <View style={styles.imageOverlay} />
           <Feather name="camera" size={26} color="white" />
         </TouchableOpacity>
@@ -54,7 +56,10 @@ export default function EditProfileScreen() {
             navigation.navigate("editProfileField", {
               title: "Display Name",
               field: "displayName",
-              value: auth.currentUser ? auth.currentUser.displayName : "",
+              value:
+                auth.currentUser && auth.currentUser.displayName
+                  ? auth.currentUser.displayName
+                  : "",
             })
           }
         >
