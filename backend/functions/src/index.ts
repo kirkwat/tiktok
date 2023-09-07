@@ -24,6 +24,12 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 const db = admin.firestore();
 
+/**
+ * Function that triggers when a 'like' or 'comment' is added to a post.
+ *
+ * This function updates the 'likesCount' or 'commentsCount' of the post
+ * and the 'likesCount' of the post creator.
+ */
 export const likeCreate = functions.firestore
   .document("post/{id}/{type}/{uid}")
   .onCreate(async (_, context) => {
@@ -58,6 +64,12 @@ export const likeCreate = functions.firestore
     });
   });
 
+/**
+ * Function that triggers when a 'like' or 'comment' is removed from a post.
+ *
+ * This function updates the 'likesCount' or 'commentsCount' of the post
+ * and the 'likesCount' of the post creator.
+ */
 export const likeDelete = functions.firestore
   .document("post/{id}/{type}/{uid}")
   .onDelete(async (_, context) => {
@@ -92,6 +104,14 @@ export const likeDelete = functions.firestore
     });
   });
 
+/**
+ * Function that triggers when a 'following' relationship is created
+ * between two users.
+ *
+ * This function updates the 'followersCount' of the user being
+ * followed ('userId') and the 'followingCount' of the user who is
+ * following ('followerId').
+ */
 export const followCreate = functions.firestore
   .document("user/{followerId}/following/{userId}")
   .onCreate(async (_, context) => {
@@ -118,6 +138,14 @@ export const followCreate = functions.firestore
     });
   });
 
+/**
+ * Function that triggers when a 'following' relationship is removed
+ * between two users.
+ *
+ * This function updates the 'followersCount' of the user being
+ * followed ('userId') and the 'followingCount' of the user who is
+ * following ('followerId').
+ */
 export const followDelete = functions.firestore
   .document("user/{followerId}/following/{userId}")
   .onDelete(async (_, context) => {
@@ -144,6 +172,14 @@ export const followDelete = functions.firestore
     });
   });
 
+/**
+ * Function that triggers when a new user is created in Firebase
+ * Authentication.
+ *
+ * This function initializes the user's profile in Firestore with
+ * additional fields such as 'followingCount', 'followersCount',
+ * and 'likesCount' all set to zero.
+ */
 export const newUser = functions.auth.user().onCreate((user) => {
   const userData = {
     ...JSON.parse(JSON.stringify(user)),
