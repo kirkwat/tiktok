@@ -8,6 +8,8 @@ import { AppDispatch } from "../../../redux/store";
 
 export interface AuthDetailsProps {
   authPage: 0 | 1;
+  setAuthPage: Dispatch<SetStateAction<0 | 1>>;
+  setMenuMessage: Dispatch<SetStateAction<string>>;
   setDetailsPage: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -24,6 +26,8 @@ export interface AuthDetailsProps {
  */
 export default function AuthDetails({
   authPage,
+  setAuthPage,
+  setMenuMessage,
   setDetailsPage,
 }: AuthDetailsProps) {
   const [email, setEmail] = useState("");
@@ -41,7 +45,12 @@ export default function AuthDetails({
   const handleRegister = () => {
     dispatch(register({ email, password }))
       .unwrap()
-      .then(() => console.log("register successful"))
+      .then(() => {
+        console.log("register successful");
+        setDetailsPage(false);
+        setAuthPage(1);
+        setMenuMessage("Creating account...");
+      })
       .catch(() => console.log("register unsuccessful"));
   };
 

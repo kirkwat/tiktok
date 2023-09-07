@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebaseConfig";
-import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { getPostsByUser } from "./postSlice";
 import { User } from "../../../types";
 

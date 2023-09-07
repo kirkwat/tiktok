@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "red",
   },
+  menuMessage: {
+    color: "green",
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+  },
 });
 
 export default styles;

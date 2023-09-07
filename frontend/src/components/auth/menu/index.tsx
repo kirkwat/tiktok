@@ -5,6 +5,7 @@ import { Feather } from "@expo/vector-icons";
 
 export interface AuthMenuProps {
   authPage: number;
+  menuMessage: string;
   setAuthPage: Dispatch<SetStateAction<0 | 1>>;
   setDetailsPage: Dispatch<SetStateAction<boolean>>;
 }
@@ -24,6 +25,7 @@ export interface AuthMenuProps {
  */
 export default function AuthMenu({
   authPage,
+  menuMessage,
   setAuthPage,
   setDetailsPage,
 }: AuthMenuProps) {
@@ -33,6 +35,7 @@ export default function AuthMenu({
         <Text style={styles.headerText}>
           {authPage == 0 ? "Sign In" : "Sign Up"}
         </Text>
+        {menuMessage && <Text style={styles.menuMessage}>{menuMessage}</Text>}
         <TouchableOpacity
           style={styles.providerButton}
           onPress={() => setDetailsPage(true)}

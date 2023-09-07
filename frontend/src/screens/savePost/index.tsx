@@ -1,4 +1,4 @@
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -17,16 +17,17 @@ import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/main";
 import { AppDispatch } from "../../redux/store";
+import { HomeStackParamList } from "../../navigation/home";
 
 interface SavePostScreenProps {
   route: RouteProp<RootStackParamList, "savePost">;
-  navigation: NativeStackNavigationProp<RootStackParamList, "savePost">;
 }
 
 export default function SavePostScreen({ route }: SavePostScreenProps) {
   const [description, setDescription] = useState("");
   const [requestRunning, setRequestRunning] = useState(false);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
   const dispatch: AppDispatch = useDispatch();
   const handleSavePost = () => {
@@ -38,7 +39,7 @@ export default function SavePostScreen({ route }: SavePostScreenProps) {
         thumbnail: route.params.sourceThumb,
       }),
     )
-      .then(() => navigation.dispatch(StackActions.popToTop()))
+      .then(() => navigation.navigate("feed"))
       .catch(() => setRequestRunning(false));
   };
 

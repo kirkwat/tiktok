@@ -27,7 +27,10 @@ let commentListenerInstance: (() => void) | null = null;
 export const getFeed = (): Promise<Post[]> => {
   return new Promise(async (resolve, reject) => {
     try {
-      const q = query(collection(FIREBASE_DB, "post"));
+      const q = query(
+        collection(FIREBASE_DB, "post"),
+        orderBy("creation", "desc"),
+      );
       const querySnapshot = await getDocs(q);
       const posts = querySnapshot.docs.map((doc) => {
         const id = doc.id;

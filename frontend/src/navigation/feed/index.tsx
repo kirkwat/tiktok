@@ -11,13 +11,13 @@ export type FeedStackParamList = {
   feedProfile: { initialUserId: string };
 };
 
-const { Screen, Navigator } =
-  createMaterialTopTabNavigator<FeedStackParamList>();
-
 interface CurrentUserProfileItemInViewContextType {
   currentUserProfileItemInView: string | null;
   setCurrentUserProfileItemInView: Dispatch<SetStateAction<string | null>>;
 }
+
+const { Screen, Navigator } =
+  createMaterialTopTabNavigator<FeedStackParamList>();
 
 export const CurrentUserProfileItemInViewContext =
   createContext<CurrentUserProfileItemInViewContextType>({

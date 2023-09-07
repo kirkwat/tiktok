@@ -179,12 +179,12 @@ export default function CameraScreen() {
             onPress={() => pickFromGallery()}
             style={styles.galleryButton}
           >
-            {galleryItems[0] == undefined ? (
+            {galleryItems[galleryItems.length - 1] == undefined ? (
               <></>
             ) : (
               <Image
                 style={styles.galleryButtonImage}
-                source={{ uri: galleryItems[0].uri }}
+                source={{ uri: galleryItems[galleryItems.length - 1].uri }}
               />
             )}
           </TouchableOpacity>
