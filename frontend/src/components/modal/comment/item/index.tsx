@@ -20,7 +20,11 @@ const CommentItem = ({ item }: { item: Comment }) => {
         <Avatar.Icon size={32} icon={"account"} />
       )}
       <View style={styles.containerText}>
-        {user && <Text style={styles.displayName}>{user.displayName || user.email}</Text>}
+        {user && (
+          <Text style={styles.displayName}>
+            {user.displayName || user.email}
+          </Text>
+        )}
         <Text>{item.comment}</Text>
       </View>
     </View>

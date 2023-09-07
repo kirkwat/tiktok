@@ -143,7 +143,7 @@ export default function CameraScreen() {
             setCameraType(
               cameraType === CameraType.back
                 ? CameraType.front
-                : CameraType.back
+                : CameraType.back,
             )
           }
         >
@@ -155,7 +155,7 @@ export default function CameraScreen() {
           style={styles.sideBarButton}
           onPress={() =>
             setCameraFlash(
-              cameraFlash === FlashMode.off ? FlashMode.torch : FlashMode.off
+              cameraFlash === FlashMode.off ? FlashMode.torch : FlashMode.off,
             )
           }
         >

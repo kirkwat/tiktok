@@ -119,7 +119,7 @@ export const PostSingle = forwardRef<PostSingleHandles, { item: Post }>(
         />
       </>
     );
-  }
+  },
 );
 
 export default PostSingle;

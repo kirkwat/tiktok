@@ -14,7 +14,7 @@ import {
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 
 export const chatsListener = (
-  listener: (snapshot: QuerySnapshot<DocumentData>) => void
+  listener: (snapshot: QuerySnapshot<DocumentData>) => void,
 ) => {
   if (FIREBASE_AUTH.currentUser === null) {
     return;
@@ -23,7 +23,7 @@ export const chatsListener = (
   const chatsQuery = query(
     collection(FIREBASE_DB, "chats"),
     where("members", "array-contains", FIREBASE_AUTH.currentUser.uid),
-    orderBy("lastUpdate", "desc")
+    orderBy("lastUpdate", "desc"),
   );
 
   const unsubscribe = onSnapshot(chatsQuery, listener);
@@ -33,11 +33,11 @@ export const chatsListener = (
 
 export const messagesListener = (
   listener: (snapshot: QuerySnapshot<DocumentData>) => void,
-  chatId: string
+  chatId: string,
 ) => {
   const messagesQuery = query(
     collection(doc(collection(FIREBASE_DB, "chats"), chatId), "messages"),
-    orderBy("creation", "desc")
+    orderBy("creation", "desc"),
   );
 
   const unsubscribe = onSnapshot(messagesQuery, listener);
@@ -52,7 +52,7 @@ export const sendMessage = async (chatId: string, message: string) => {
 
   const messagesCollection = collection(
     doc(collection(FIREBASE_DB, "chats"), chatId),
-    "messages"
+    "messages",
   );
   await addDoc(messagesCollection, {
     creator: FIREBASE_AUTH.currentUser.uid,

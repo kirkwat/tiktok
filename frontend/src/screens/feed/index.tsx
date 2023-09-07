@@ -1,12 +1,7 @@
 import { FlatList, View, Dimensions, ViewToken } from "react-native";
 import styles from "./styles";
 import PostSingle, { PostSingleHandles } from "../../components/general/post";
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { getFeed, getPostsByUserId } from "../../services/posts";
 import { Post } from "../../../types";
 import { RouteProp } from "@react-navigation/native";
@@ -36,7 +31,7 @@ interface PostViewToken extends ViewToken {
  */
 export default function FeedScreen({ route }: { route: FeedScreenRouteProp }) {
   const { setCurrentUserProfileItemInView } = useContext(
-    CurrentUserProfileItemInViewContext
+    CurrentUserProfileItemInViewContext,
   );
 
   const { creator, profile } = route.params as {
@@ -76,7 +71,7 @@ export default function FeedScreen({ route }: { route: FeedScreenRouteProp }) {
           }
         }
       });
-    }
+    },
   );
 
   const feedItemHeight =

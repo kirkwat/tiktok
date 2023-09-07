@@ -38,7 +38,7 @@ export default function PostSingleOverlay({
     counter: post.likesCount,
   });
   const [currentCommentsCount, setCurrentCommentsCount] = useState(
-    post.commentsCount
+    post.commentsCount,
   );
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export default function PostSingleOverlay({
           updateLike(post.id, currentUser.uid, currentLikeStateInst.state);
         }
       }),
-    []
+    [],
   );
 
   const handleUpdateCommentCount = () => {
@@ -125,7 +125,7 @@ export default function PostSingleOverlay({
                 data: post,
                 modalType: 0,
                 onCommentSend: handleUpdateCommentCount,
-              })
+              }),
             )
           }
         >

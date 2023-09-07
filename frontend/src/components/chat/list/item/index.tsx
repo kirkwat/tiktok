@@ -16,7 +16,7 @@ const ChatListItem = ({ chat }: { chat: Chat }) => {
     FIREBASE_AUTH.currentUser &&
       chat.members[0] === FIREBASE_AUTH.currentUser.uid
       ? chat.members[1]
-      : chat.members[0]
+      : chat.members[0],
   );
 
   return (
@@ -42,7 +42,7 @@ const ChatListItem = ({ chat }: { chat: Chat }) => {
           ? `${
               new Date(chat.lastUpdate.seconds * 1000).getMonth() + 1
             }/${new Date(chat.lastUpdate.seconds * 1000).getDate()}/${new Date(
-              chat.lastUpdate.seconds * 1000
+              chat.lastUpdate.seconds * 1000,
             ).getFullYear()}`
           : "Now"}
       </Text>

@@ -21,7 +21,7 @@ export const saveUserProfileImage = (image: string) =>
       if (FIREBASE_AUTH.currentUser) {
         const downloadURL = await saveMediaToStorage(
           image,
-          `profileImage/${FIREBASE_AUTH.currentUser.uid}`
+          `profileImage/${FIREBASE_AUTH.currentUser.uid}`,
         );
 
         const db = getFirestore();
@@ -73,7 +73,7 @@ export const queryUsersByEmail = (email: string): Promise<SearchUser[]> => {
       const q = query(
         collection(FIREBASE_DB, "user"),
         where("email", ">=", email),
-        where("email", "<=", email + "\uf8ff")
+        where("email", "<=", email + "\uf8ff"),
       );
 
       const querySnapshot = await getDocs(q);
@@ -164,7 +164,7 @@ export const changeFollowState = async ({
     "user",
     currentUserUid,
     "following",
-    otherUserId
+    otherUserId,
   );
 
   try {

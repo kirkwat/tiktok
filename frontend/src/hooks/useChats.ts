@@ -14,11 +14,11 @@ export const useChats = () => {
     (change: QuerySnapshot) => {
       dispatch(
         setChats(
-          change.docs.map((item) => ({ id: item.id, ...item.data() } as Chat))
-        )
+          change.docs.map((item) => ({ id: item.id, ...item.data() }) as Chat),
+        ),
       );
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(() => {

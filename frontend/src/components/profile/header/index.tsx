@@ -29,7 +29,7 @@ export default function ProfileHeader({
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [followersCount, setFollowersCount] = useState(
-    user?.followersCount || 0
+    user?.followersCount || 0,
   );
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function ProfileHeader({
 
   const followingData = useFollowing(
     FIREBASE_AUTH.currentUser?.uid ?? null,
-    user?.uid ?? null
+    user?.uid ?? null,
   );
   const isFollowing =
     FIREBASE_AUTH.currentUser?.uid && user?.uid && followingData.data

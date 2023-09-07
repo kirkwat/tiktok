@@ -32,7 +32,7 @@ export default function ProfileScreen({
   const providerUserId = useContext(CurrentUserProfileItemInViewContext);
 
   const userQuery = useUser(
-    initialUserId ? initialUserId : providerUserId.currentUserProfileItemInView
+    initialUserId ? initialUserId : providerUserId.currentUserProfileItemInView,
   );
 
   const user = userQuery.data;

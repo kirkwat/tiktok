@@ -36,7 +36,7 @@ export default function SavePostScreen({ route }: SavePostScreenProps) {
         description,
         video: route.params.source,
         thumbnail: route.params.sourceThumb,
-      })
+      }),
     )
       .then(() => navigation.dispatch(StackActions.popToTop()))
       .catch(() => setRequestRunning(false));

@@ -20,6 +20,6 @@ export const useUser = (userId: string | null, options = {}) => {
       }
       return getUserById(userId);
     },
-    options
+    options,
   );
 };

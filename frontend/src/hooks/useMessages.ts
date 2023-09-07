@@ -16,10 +16,10 @@ export const useMessages = (chatId?: string, contactId?: string) => {
   const handleMessagesChange = useCallback(
     (change: QuerySnapshot) => {
       setMessages(
-        change.docs.map((item) => ({ id: item.id, ...item.data() } as Message))
+        change.docs.map((item) => ({ id: item.id, ...item.data() }) as Message),
       );
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const useMessages = (chatId?: string, contactId?: string) => {
 
     if (!chatIdInst) {
       let chat = chats.find((item) =>
-        item.members.some((member) => member === contactId)
+        item.members.some((member) => member === contactId),
       );
 
       if (!chat && contactId) {

@@ -27,9 +27,9 @@ export const useFollowingMutation = (options = {}) => {
       queryClient.setQueryData(
         keys.userFollowing(
           FIREBASE_AUTH.currentUser?.uid,
-          variables.otherUserId
+          variables.otherUserId,
         ),
-        !variables.isFollowing
+        !variables.isFollowing,
       );
     },
   });

@@ -15,7 +15,7 @@ import { keys } from "./queryKeys";
 export const useFollowing = (
   userId: string | null,
   otherUserId: string | null,
-  options = {}
+  options = {},
 ) => {
   if (!userId || !otherUserId) {
     return {
@@ -28,6 +28,6 @@ export const useFollowing = (
   return useQuery(
     keys.userFollowing(userId, otherUserId),
     () => getIsFollowing(userId, otherUserId),
-    options
+    options,
   );
 };
