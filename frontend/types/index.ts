@@ -19,6 +19,9 @@ export interface User {
   email: string;
   displayName: string | null;
   photoURL?: string;
+  followingCount: number;
+  followersCount: number;
+  likesCount: number;
 }
 
 export interface SearchUser extends User {

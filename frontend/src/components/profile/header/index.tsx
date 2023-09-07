@@ -10,6 +10,7 @@ import { FIREBASE_AUTH } from "../../../../firebaseConfig";
 import { useFollowing } from "../../../hooks/useFollowing";
 import { Feather } from "@expo/vector-icons";
 import { useFollowingMutation } from "../../../hooks/useFollowingMutation";
+import { useEffect, useState } from "react";
 
 /**
  * Renders the header of the user profile and
@@ -27,6 +28,13 @@ export default function ProfileHeader({
 }) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [followersCount, setFollowersCount] = useState(
+    user?.followersCount || 0
+  );
+
+  useEffect(() => {
+    setFollowersCount(user?.followersCount || 0);
+  }, [user]);
 
   const followingData = useFollowing(
     FIREBASE_AUTH.currentUser?.uid ?? null,
@@ -61,6 +69,7 @@ export default function ProfileHeader({
                   otherUserId: user.uid,
                   isFollowing,
                 });
+                setFollowersCount(followersCount - 1);
               }
             }}
           >
@@ -78,6 +87,7 @@ export default function ProfileHeader({
                 otherUserId: user.uid,
                 isFollowing,
               });
+              setFollowersCount(followersCount + 1);
             }
           }}
         >
@@ -98,15 +108,15 @@ export default function ProfileHeader({
         <Text style={styles.emailText}>{user.displayName || user.email}</Text>
         <View style={styles.counterContainer}>
           <View style={styles.counterItemContainer}>
-            <Text style={styles.counterNumberText}>0</Text>
+            <Text style={styles.counterNumberText}>{user.followingCount}</Text>
             <Text style={styles.counterLabelText}>Following</Text>
           </View>
           <View style={styles.counterItemContainer}>
-            <Text style={styles.counterNumberText}>0</Text>
+            <Text style={styles.counterNumberText}>{followersCount}</Text>
             <Text style={styles.counterLabelText}>Followers</Text>
           </View>
           <View style={styles.counterItemContainer}>
-            <Text style={styles.counterNumberText}>0</Text>
+            <Text style={styles.counterNumberText}>{user.likesCount}</Text>
             <Text style={styles.counterLabelText}>Likes</Text>
           </View>
         </View>
