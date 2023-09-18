@@ -1,6 +1,13 @@
-# TikTok made with React Native and Firebase
+<h1>
+  <img src="https://github.com/kirkwat/tiktok/assets/60279003/9f327b06-f068-4489-8d6f-915cbea508ec" width="56" height="56" style="vertical-align:bottom">
+  TikTok made with React Native and Firebase
+</h1>
 
 This project is a TikTok clone built using React Native, Expo, TypeScript, Firebase, and Redux. Building off of [SimCoder's TikTok clone tutorial](https://github.com/SimCoderYoutube/TiktokClone), this implementation is refactored to incorporate TypeScript and updated to utilize Firebase v10 and Redux Toolkit.
+
+<p align="center">
+  <img src="https://github.com/kirkwat/tiktok/assets/60279003/55a9a028-3aee-4be2-bb7e-d5401cba5580">
+</p>
 
 ## Features
 
@@ -14,7 +21,7 @@ This project is a TikTok clone built using React Native, Expo, TypeScript, Fireb
   - Explore posts from other users
   - Like/comment on posts
 - Directly message users
-- User search
+- User search by email
 
 ## Setup & Usage
 
@@ -67,7 +74,7 @@ To start the application, run the following command.
 npm run start
 ```
 
-This will launch the Expo development server. To view the application, you'll need either an iOS or Android emulator. If you're unfamiliar with setting up an emulator, you can follow the beginning of [this tutorial](https://www.youtube.com/watch?v=HrN1Fvjp2CE) for guidance on configuring an Android emulator.
+This will launch the Expo development server. To view the application, you'll need either an iOS or Android emulator. If you're unfamiliar with setting up an emulator, you can follow the beginning of [this tutorial](https://www.youtube.com/watch?v=HrN1Fvjp2CE) for guidance on configuring an Android emulator. Watch [this tutorial](https://www.youtube.com/watch?v=DloY4tyzKDA) to set up an iOS emulator.
 
 When you first run the project, you will encounter the following error related to Firestore:
 
