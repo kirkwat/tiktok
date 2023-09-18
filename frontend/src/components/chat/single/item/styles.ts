@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   containerTextOther: {
     marginHorizontal: 14,
-    backgroundColor: "cyan",
+    backgroundColor: "#0891b2",
     borderRadius: 8,
     paddingVertical: 4,
     paddingHorizontal: 8,
