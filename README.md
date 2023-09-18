@@ -6,7 +6,7 @@
 This project is a TikTok clone built using React Native, Expo, TypeScript, Firebase, and Redux. Building off of [SimCoder's TikTok clone tutorial](https://github.com/SimCoderYoutube/TiktokClone), this implementation is refactored to incorporate TypeScript and updated to utilize Firebase v10 and Redux Toolkit.
 
 <p align="center">
-  <img src="https://github.com/kirkwat/tiktok/assets/60279003/5b0c988b-966e-4d26-ad64-d8409d97d446">
+  <img src="https://github.com/kirkwat/tiktok/assets/60279003/24265ba0-d014-4e8c-bed8-ddf099850fb4">
 </p>
 
 ## Features
